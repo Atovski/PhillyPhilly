@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Philly Philly Food Truck</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-container">
+            <a href="index.html">
+                <img src="img/philly-philly-logo.png" alt="Philly Philly Food Truck Logo" class="logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#menu">Menu</a></li>
+                    <li><a href="index.html#location">Find Us</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="calendar-page-header">
+        <h1>Our Gallery</h1>
+        <p>Moments from our festivals and street food events.</p>
+    </section>
+
+    <!-- Full Gallery Grid -->
+    <section style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+        <div id="full-gallery-grid" class="instagram-grid"
+            style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+            <div style="grid-column: 1/-1; text-align: center; padding: 4rem;">Loading all photos...</div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="index.html" class="secondary-button">Back to Home</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h3>Hire Us!</h3>
+                <a href="tel:+4407599182162" class="phone-link"><i class="fas fa-phone"></i> +44 07599 182162</a>
+            </div>
+            <div class="footer-right">
+                <p>&copy; 2026 Philly Philly Food Truck.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/phillyphilly.uk/" target="_blank"><i
+                            class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Init Full Gallery
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof loadFullGallery === 'function') {
+                loadFullGallery();
+            }
+        });
+    </script>
+</body>
+
+</html>

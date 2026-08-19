@@ -1,0 +1,12 @@
+# Old single-page URLs -> new structure. Keeps any existing links, QR codes and
+# Instagram bio links working, and passes ranking signals to the new pages.
+/index.html        /                  301
+/gallery.html      /gallery/          301
+/calendar.html     /find-us/          301
+/admin.html        /admin/            301
+
+# Convenience shortcuts (worth putting on flyers and business cards)
+/quote             /contact/          301
+/book              /contact/          301
+/wedding           /weddings/         301
+/allergens         /menu/#allergens   301

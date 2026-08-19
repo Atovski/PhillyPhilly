@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Philly Philly Food Truck - Delicious street food at festivals and concerts! Discover our location and menu.">
+    <meta name="keywords" content="food truck, philly, festival food, street food, event catering, london food truck">
+    <meta name="author" content="Philly Philly Food Truck">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Philly Philly Food Truck">
+    <meta property="og:description" content="Delicious street food at festivals and concerts in London!">
+    <meta property="og:type" content="website">
+
+    <title>Philly Philly Food Truck | Festival & Concert Bites</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/png">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header id="header">
+        <div class="header-container">
+            <a href="#home">
+                <img src="img/philly-philly-logo.png" alt="Philly Philly Food Truck Logo" class="logo">
+            </a>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#location">Find Us</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="hero" id="home">
+        <div class="hero-left">
+            <div class="hero-content">
+                <h1>Flavour Takes the Stage</h1>
+                <p>Serving authentic Philly cheesesteaks at concerts, festivals and street food events across the UK.
+                    Freshly grilled, made to order, and ready when you are.</p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="cta-button">View Menu</a>
+                    <a href="#location" class="cta-button secondary-cta">See Our Next Events</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <img src="img/hero-banner.jpg" alt="Philly Philly Food Truck Festival" class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu-section" id="menu">
+        <h2 class="section-title">Our Delicious Menu</h2>
+
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="img/menu-1.svg" alt="Menu Item 1" class="menu-item-image">
+                <div class="menu-item-content">
+                    <h3>New Orleans Chicken</h3>
+                    <p>Crispy on the outside, juicy on the inside chicken marinated with special spices. Mildly spicy
+                        and aromatic flavor.</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="img/menu-2.svg" alt="Menu Item 2" class="menu-item-image">
+                <div class="menu-item-content">
+                    <h3>Philly Loaded Fries</h3>
+                    <p>Crispy fries topped with beef and melted cheddar sauce. Hearty and generously loaded.</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="img/menu-3.svg" alt="Menu Item 3" class="menu-item-image">
+                <div class="menu-item-content">
+                    <h3>Philly Cheesesteak Sandwich</h3>
+                    <p>A classic sandwich made with thinly sliced beef, caramelized onions, and cheddar cheese. Served
+                        hot and satisfying.</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="img/menu-4.svg" alt="Mac & Cheese Croquettes" class="menu-item-image">
+                <div class="menu-item-content">
+                    <h3>Mac & Cheese Croquettes</h3>
+                    <p>Crispy on the outside, creamy mac and cheese on the inside. Golden fried and full of cheesy
+                        flavor.</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="img/menu-5.svg" alt="Philly Cheesesteak Wrap" class="menu-item-image">
+                <div class="menu-item-content">
+                    <h3>Philly Cheesesteak Wrap</h3>
+                    <p>Thinly sliced beef, caramelized onions, and cheddar cheese wrapped in a soft tortilla. Warm,
+                        flavorful, and easy to enjoy.</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="img/menu-6.svg" alt="New Orleans Chicken Wrap" class="menu-item-image">
+                <div class="menu-item-content">
+                    <h3>New Orleans Chicken Wrap</h3>
+                    <p>Crispy, juicy chicken marinated with special New Orleans spices, wrapped in a soft tortilla.
+                        Mildly spicy and full of flavor.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Location & Gallery Section -->
+    <section class="location-gallery-section" id="location">
+        <h2 class="section-title">Where to Find Us?</h2>
+
+        <div class="location-gallery-container">
+            <!-- Calendar Section -->
+            <div class="calendar-container">
+                <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+
+                <!-- Dynamic List Container -->
+                <div id="upcoming-events-list" class="calendar-week">
+                    <!-- Events will be populated by JavaScript -->
+                    <div style="text-align: center; padding: 2rem;">Loading schedule...</div>
+                </div>
+
+                <div class="view-calendar-btn-container">
+                    <a href="calendar.html" class="secondary-button">View Monthly Calendar</a>
+                </div>
+            </div>
+
+            <!-- Local Gallery Section -->
+            <div class="gallery-container" id="gallery">
+                <h3>Our Gallery</h3>
+
+                <!-- Gallery Grid (Preview 6) -->
+                <div id="home-gallery-grid" class="instagram-grid">
+                    <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">Loading photos...</div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="gallery.html" class="cta-button" style="padding: 0.8rem 2rem; font-size: 1rem;">All
+                        Photos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="img/philly-philly-logo.png" alt="Philly Philly Food Truck Logo" class="footer-logo">
+            </div>
+
+            <div class="footer-contact">
+                <h3>Hire Us!</h3>
+                <p>Contact us for festivals, concerts, and private events.</p>
+                <div class="contact-methods">
+                    <a href="tel:+4407599182162" class="contact-link"><i class="fas fa-phone-alt"></i> +44 07599
+                        182162</a>
+                    <a href="mailto:phillyphillysteak@gmail.com" class="contact-link"><i class="fas fa-envelope"></i>
+                        phillyphillysteak@gmail.com</a>
+                </div>
+            </div>
+
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/phillyphilly.uk/" target="_blank" aria-label="Instagram"
+                        class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Philly Philly Food Truck. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+    <!-- Inline JS for Mobile Menu - Kept for fallback, but logic can move to script.js eventually -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+
+</html>

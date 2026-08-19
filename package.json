@@ -1,0 +1,15 @@
+{
+  "name": "phillyphilly",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Philly Philly Food Truck - marketing site",
+  "scripts": {
+    "images": "node scripts/optimize-images.js",
+    "build": "node scripts/build.js",
+    "dev": "node scripts/build.js && node scripts/serve.js",
+    "serve": "node scripts/serve.js"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
+}

@@ -1,0 +1,203 @@
+<!--meta
+{
+  "url": "/menu/",
+  "nav": "menu",
+  "priority": "0.8",
+  "title": "Our Menu | Philly Cheesesteaks, Loaded Fries & Wraps | Philly Philly",
+  "description": "Philly cheesesteaks, loaded fries, mac and cheese croquettes and New Orleans spiced chicken, cooked to order from our truck. Allergen information available.",
+  "jsonld": {
+    "@context": "https://schema.org",
+    "@type": "Menu",
+    "name": "Philly Philly Food Truck menu",
+    "url": "https://phillyphilly.co.uk/menu/",
+    "inLanguage": "en-GB",
+    "hasMenuSection": [
+      {
+        "@type": "MenuSection",
+        "name": "Mains",
+        "hasMenuItem": [
+          { "@type": "MenuItem", "name": "Philly Cheesesteak", "description": "Thin-sliced beef, caramelised onions and cheddar cheese sauce in a soft roll." },
+          { "@type": "MenuItem", "name": "New Orleans Chicken", "description": "Crisp spiced chicken, mildly hot and aromatic." },
+          { "@type": "MenuItem", "name": "Philly Cheesesteak Wrap", "description": "Cheesesteak filling in a soft tortilla." },
+          { "@type": "MenuItem", "name": "New Orleans Chicken Wrap", "description": "Spiced chicken wrapped with salad and sauce." }
+        ]
+      },
+      {
+        "@type": "MenuSection",
+        "name": "Sides",
+        "hasMenuItem": [
+          { "@type": "MenuItem", "name": "Philly Loaded Fries", "description": "Fries topped with steak and melted cheddar sauce." },
+          { "@type": "MenuItem", "name": "Mac & Cheese Croquettes", "description": "Fried croquettes with a molten mac and cheese centre." }
+        ]
+      }
+    ]
+  }
+}
+meta-->
+
+<section class="page-head">
+    <div class="wrap">
+        <span class="eyebrow">The food</span>
+        <h1>Our menu</h1>
+        <p>Everything is cooked to order on the griddle. Nothing sits under a heat lamp waiting for you.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <div class="section-head">
+            <h2>Mains</h2>
+        </div>
+
+        <div class="menu-grid">
+            <article class="card menu-item">
+                <img src="/assets/img/menu/menu-3.webp" alt="Philly cheesesteak sandwich with melted cheddar sauce"
+                    width="800" height="600" loading="lazy" decoding="async">
+                <div class="card-body">
+                    <h3>Philly Cheesesteak</h3>
+                    <p>The classic, and the reason we exist. Thin-sliced beef seared on the griddle with caramelised
+                        onions, finished with cheddar cheese sauce in a soft roll.</p>
+                </div>
+            </article>
+
+            <article class="card menu-item">
+                <img src="/assets/img/menu/menu-1.webp" alt="New Orleans spiced fried chicken" width="800"
+                    height="600" loading="lazy" decoding="async">
+                <div class="card-body">
+                    <h3>New Orleans Chicken</h3>
+                    <p>Crisp on the outside, juicy inside, marinated in our own New Orleans spice blend. Mildly
+                        spicy and aromatic rather than fiery.</p>
+                </div>
+            </article>
+
+            <article class="card menu-item">
+                <img src="/assets/img/menu/menu-5.webp" alt="Philly cheesesteak wrap" width="800" height="600"
+                    loading="lazy" decoding="async">
+                <div class="card-body">
+                    <h3>Philly Cheesesteak Wrap</h3>
+                    <p>Steak, caramelised onions and cheddar in a soft tortilla. The easier option if you are eating
+                        standing up with a drink in your other hand.</p>
+                </div>
+            </article>
+
+            <!-- TODO-CLIENT: this photo is currently a duplicate of the cheesesteak wrap.
+                 Needs a real photograph of the chicken wrap. -->
+            <article class="card menu-item">
+                <img src="/assets/img/menu/menu-6.webp" alt="New Orleans chicken wrap" width="800" height="600"
+                    loading="lazy" decoding="async">
+                <div class="card-body">
+                    <h3>New Orleans Chicken Wrap</h3>
+                    <p>Our spiced chicken wrapped up with salad and sauce. Mildly spicy and full of flavour.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="section-head mt-4">
+            <h2>Sides</h2>
+        </div>
+
+        <div class="menu-grid">
+            <article class="card menu-item">
+                <img src="/assets/img/menu/menu-2.webp" alt="Loaded fries topped with steak and cheddar sauce"
+                    width="800" height="600" loading="lazy" decoding="async">
+                <div class="card-body">
+                    <h3>Philly Loaded Fries</h3>
+                    <p>Crisp fries buried under steak and melted cheddar sauce. Big enough to share, in theory.</p>
+                </div>
+            </article>
+
+            <article class="card menu-item">
+                <img src="/assets/img/menu/menu-4.webp" alt="Mac and cheese croquettes" width="800" height="600"
+                    loading="lazy" decoding="async">
+                <div class="card-body">
+                    <h3>Mac &amp; Cheese Croquettes</h3>
+                    <p>Golden fried outside, molten mac and cheese inside. Our most-ordered side, by some distance.</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- TODO-CLIENT: prices. Public trading prices can go straight on this page.
+             Event catering is quoted per head, so keep those on /contact/. -->
+    </div>
+</section>
+
+<section class="section section-alt" id="allergens">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="eyebrow">Important</span>
+            <h2>Allergen information</h2>
+            <p class="lead">Please speak to our team before you order. We can talk you through exactly what is in
+                every dish, and we are happy to check ingredients with you at the hatch.</p>
+        </div>
+
+        <p class="muted">Our food is prepared in a single mobile kitchen where allergens including cereals
+            containing gluten, milk, eggs, soya, mustard, sesame and sulphites are handled. We cannot guarantee any
+            dish is free from traces of an allergen. If you have a severe allergy, tell us before you order and
+            before your event so we can advise you properly.</p>
+
+        <!-- TODO-CLIENT — LEGAL: this table must be completed and verified against the actual
+             recipes and supplier specifications before the site goes live. Under the UK Food
+             Information Regulations you must be able to give accurate allergen information for
+             the 14 declared allergens. Do not publish guesses. Tick each cell only where the
+             allergen is genuinely present.
+             The 14: celery, cereals containing gluten, crustaceans, eggs, fish, lupin, milk,
+             molluscs, mustard, tree nuts, peanuts, sesame, soybeans, sulphur dioxide/sulphites. -->
+
+        <div class="table-scroll mt-4">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Dish</th>
+                        <th scope="col">Gluten</th>
+                        <th scope="col">Milk</th>
+                        <th scope="col">Egg</th>
+                        <th scope="col">Soya</th>
+                        <th scope="col">Mustard</th>
+                        <th scope="col">Sesame</th>
+                        <th scope="col">Sulphites</th>
+                        <th scope="col">Celery</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Philly Cheesesteak</th>
+                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">New Orleans Chicken</th>
+                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Philly Cheesesteak Wrap</th>
+                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">New Orleans Chicken Wrap</th>
+                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Philly Loaded Fries</th>
+                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Mac &amp; Cheese Croquettes</th>
+                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="muted mt-4">Allergen details are being finalised with our suppliers. In the meantime, please ask
+            a member of our team — we will always give you a straight answer, and if we are not certain we will say
+            so.</p>
+    </div>
+</section>
+
+<section class="cta-band">
+    <h2>Want this menu at your event?</h2>
+    <p>We cater weddings, corporate days and private parties across {{site.baseCity}} and the South East.</p>
+    <div class="cta-actions">
+        <a href="/contact/" class="btn btn-accent">Get a quote</a>
+        <a href="/find-us/" class="btn btn-light">Find the truck</a>
+    </div>
+</section>

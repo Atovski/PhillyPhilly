@@ -1,0 +1,180 @@
+<!--meta
+{
+  "url": "/contact/",
+  "nav": "contact",
+  "priority": "0.9",
+  "title": "Get a Quote | Philly Philly Food Truck Hire UK",
+  "description": "Tell us your date, postcode and guest numbers and we will send a fixed price per head within 24 hours. Food truck hire for weddings, corporate events and private parties.",
+  "jsonld": {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Get a quote",
+    "url": "https://phillyphilly.co.uk/contact/",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Philly Philly Food Truck",
+      "telephone": "+447599182162",
+      "email": "phillyphillysteak@gmail.com",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Sales",
+        "telephone": "+447599182162",
+        "email": "phillyphillysteak@gmail.com",
+        "areaServed": "GB",
+        "availableLanguage": "English"
+      }
+    }
+  }
+}
+meta-->
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>Get a quote</h1>
+        <p>Two minutes to fill in, and you get a fixed price per head back within 24 hours — no call required
+            unless you want one.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <div class="split">
+            <div>
+                <div class="form-card">
+                    <form id="quote-form" action="{{site.formEndpoint}}" method="POST"
+                        data-phone="{{site.phoneDisplay}}" data-email="{{site.email}}">
+
+                        <input type="hidden" name="access_key" value="{{site.formAccessKey}}">
+                        <input type="hidden" name="subject" value="New event enquiry from phillyphilly.co.uk">
+                        <input type="hidden" name="from_name" value="Philly Philly website">
+                        <div class="honeypot" aria-hidden="true">
+                            <label>Leave this empty<input type="text" name="botcheck" tabindex="-1"
+                                    autocomplete="off"></label>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="name">Your name *</label>
+                                <input type="text" id="name" name="name" required autocomplete="name">
+                            </div>
+                            <div class="field">
+                                <label for="phone">Phone *</label>
+                                <input type="tel" id="phone" name="phone" required autocomplete="tel">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required autocomplete="email">
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="event_type">Type of event *</label>
+                                <select id="event_type" name="event_type" required>
+                                    <option value="">Please choose…</option>
+                                    <option>Wedding</option>
+                                    <option>Corporate / work event</option>
+                                    <option>Private party or birthday</option>
+                                    <option>Festival or public event</option>
+                                    <option>Film / TV production</option>
+                                    <option>Something else</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="event_date">Event date *</label>
+                                <input type="date" id="event_date" name="event_date" required>
+                                <span class="hint">Not fixed yet? Pick the closest date.</span>
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="postcode">Venue postcode *</label>
+                                <input type="text" id="postcode" name="postcode" required autocomplete="postal-code"
+                                    placeholder="e.g. E16 2QU">
+                                <span class="hint">So we can check travel and confirm access.</span>
+                            </div>
+                            <div class="field">
+                                <label for="guests">Number of guests *</label>
+                                <input type="number" id="guests" name="guests" min="1" required placeholder="e.g. 120">
+                            </div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="service_time">When would we serve?</label>
+                                <input type="text" id="service_time" name="service_time"
+                                    placeholder="e.g. 9pm–11pm evening food">
+                            </div>
+                            <div class="field">
+                                <label for="budget">Budget guide</label>
+                                <select id="budget" name="budget">
+                                    <option value="">Prefer not to say</option>
+                                    <option>Under £500</option>
+                                    <option>£500 – £1,000</option>
+                                    <option>£1,000 – £2,000</option>
+                                    <option>£2,000 – £3,500</option>
+                                    <option>£3,500+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="message">Anything else we should know?</label>
+                            <textarea id="message" name="message"
+                                placeholder="Dietary requirements, access restrictions, power availability, running order…"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <label for="heard">How did you hear about us?</label>
+                            <select id="heard" name="heard">
+                                <option value="">Please choose…</option>
+                                <option>Google search</option>
+                                <option>Instagram</option>
+                                <option>Saw the truck at an event</option>
+                                <option>Recommended by someone</option>
+                                <option>Venue or wedding planner</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-accent btn-block">Send enquiry</button>
+
+                        <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+
+                        <p class="form-note">We only use these details to answer your enquiry — see our
+                            <a href="/privacy/">privacy notice</a>. No marketing lists, no passing your details on.</p>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <h2>Rather just talk?</h2>
+                <p class="lead">Completely fine. We answer the phone between events, and WhatsApp is usually
+                    fastest if we are mid-service.</p>
+
+                <ul class="tick-list mt-4">
+                    <li><strong>Phone:</strong> <a href="tel:{{site.phone}}">{{site.phoneDisplay}}</a></li>
+                    <li><strong>Email:</strong> <a href="mailto:{{site.email}}">{{site.email}}</a></li>
+                    <li><strong>WhatsApp:</strong> <a href="https://wa.me/{{site.whatsapp}}" rel="noopener">Message
+                            us</a></li>
+                    <li><strong>Instagram:</strong> <a href="{{site.instagram}}"
+                            rel="noopener me">{{site.instagramHandle}}</a></li>
+                </ul>
+
+                <h3 class="mt-4">What happens next</h3>
+                <ol class="prose">
+                    <li>We check the date against the calendar and confirm we can cover your postcode.</li>
+                    <li>You get a written quote: price per head, minimum spend, service window, what we bring.</li>
+                    <li>If your venue needs paperwork, we send it straight to them — you do not have to chase it.</li>
+                    <li>A deposit holds the date. Balance is due before the event.</li>
+                </ol>
+
+                <h3 class="mt-4">Where we travel</h3>
+                <p>Based in {{site.baseCity}}, covering {{site.serviceAreas}} and anywhere within roughly
+                    {{site.serviceRadiusMiles}} miles. Further afield is often still possible — ask.</p>
+            </div>
+        </div>
+    </div>
+</section>

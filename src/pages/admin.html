@@ -1,0 +1,209 @@
+<!--meta
+{
+  "url": "/admin/",
+  "noindex": true,
+  "title": "Calendar Manager | Philly Philly",
+  "description": "Private area.",
+  "jsonld": {}
+}
+meta-->
+
+<section class="page-head">
+    <div class="wrap">
+        <h1>Calendar manager</h1>
+        <p>Add or remove the dates that show on the website.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap wrap-narrow">
+
+        <div id="login-view" class="form-card">
+            <h2>Sign in</h2>
+            <form id="login-form">
+                <div class="field">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-accent btn-block">Sign in</button>
+                <div id="login-status" class="form-status" role="status" aria-live="polite"></div>
+            </form>
+        </div>
+
+        <div id="admin-view" hidden>
+            <div class="form-card">
+                <h2>Add a date</h2>
+                <form id="event-form">
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="ev-date">Date</label>
+                            <input type="date" id="ev-date" required>
+                        </div>
+                        <div class="field">
+                            <label for="ev-type">Type</label>
+                            <select id="ev-type">
+                                <option value="market">Street food market</option>
+                                <option value="festival">Festival</option>
+                                <option value="concert">Concert</option>
+                                <option value="private">Private booking</option>
+                                <option value="closed">Not trading</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="ev-location">Location or event name</label>
+                        <input type="text" id="ev-location" placeholder="e.g. Canning Town Market" required>
+                    </div>
+                    <div class="field">
+                        <label for="ev-link">Link (optional)</label>
+                        <input type="url" id="ev-link" placeholder="https://…">
+                        <span class="hint">A map pin or ticket page. Leave blank if there is not one.</span>
+                    </div>
+                    <button type="submit" class="btn btn-accent btn-block">Add date</button>
+                    <div id="event-status" class="form-status" role="status" aria-live="polite"></div>
+                </form>
+            </div>
+
+            <div class="mt-4">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:16px;">
+                    <h2>Dates on the site</h2>
+                    <button type="button" id="logout" class="btn btn-outline btn-sm">Sign out</button>
+                </div>
+                <div id="event-list" class="event-list mt-4">
+                    <p class="loading">Loading…</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    (function () {
+        var KEY = 'pp_admin_token';
+        var loginView = document.getElementById('login-view');
+        var adminView = document.getElementById('admin-view');
+        var listEl = document.getElementById('event-list');
+        var token = null;
+
+        try { token = sessionStorage.getItem(KEY); } catch (e) { }
+
+        var TYPE_LABEL = {
+            market: 'Street food market', festival: 'Festival', concert: 'Concert',
+            private: 'Private booking', closed: 'Not trading'
+        };
+
+        function esc(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+
+        function show(el, cls, msg) {
+            el.className = 'form-status ' + cls;
+            el.textContent = msg;
+        }
+
+        function signedIn(yes) {
+            loginView.hidden = yes;
+            adminView.hidden = !yes;
+            if (yes) load();
+        }
+
+        function authHeaders(extra) {
+            return Object.assign({ Authorization: 'Bearer ' + token }, extra || {});
+        }
+
+        function load() {
+            fetch('/api/events', { cache: 'no-store' })
+                .then(function (r) { return r.json(); })
+                .then(function (events) {
+                    events.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+                    if (!events.length) {
+                        listEl.innerHTML = '<p class="loading">No dates yet.</p>';
+                        return;
+                    }
+                    var today = new Date().toISOString().slice(0, 10);
+                    listEl.innerHTML = events.map(function (e) {
+                        var past = e.date < today;
+                        return '<div class="event-row" style="' + (past ? 'opacity:.55;' : '') + '">' +
+                            '<div class="event-info" style="flex:1">' +
+                            '<strong>' + esc(e.date) + ' — ' + esc(e.location) + '</strong>' +
+                            '<span>' + esc(TYPE_LABEL[e.type] || e.type) + (past ? ' · past' : '') + '</span>' +
+                            '</div>' +
+                            '<button type="button" class="btn btn-outline btn-sm" data-remove="' +
+                            esc(e.id) + '">Remove</button></div>';
+                    }).join('');
+                })
+                .catch(function () {
+                    listEl.innerHTML = '<p class="loading">Could not load dates.</p>';
+                });
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var status = document.getElementById('login-status');
+            var password = document.getElementById('admin-password').value;
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: password })
+            })
+                .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, body: b }; }); })
+                .then(function (res) {
+                    if (!res.ok) { show(status, 'error', res.body.error || 'Sign in failed'); return; }
+                    token = res.body.token;
+                    try { sessionStorage.setItem(KEY, token); } catch (err) { }
+                    document.getElementById('admin-password').value = '';
+                    signedIn(true);
+                })
+                .catch(function () { show(status, 'error', 'Could not reach the server.'); });
+        });
+
+        document.getElementById('event-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var status = document.getElementById('event-status');
+
+            fetch('/api/events', {
+                method: 'POST',
+                headers: authHeaders({ 'Content-Type': 'application/json' }),
+                body: JSON.stringify({
+                    date: document.getElementById('ev-date').value,
+                    location: document.getElementById('ev-location').value,
+                    type: document.getElementById('ev-type').value,
+                    link: document.getElementById('ev-link').value
+                })
+            })
+                .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, status: r.status, body: b }; }); })
+                .then(function (res) {
+                    if (res.status === 401) { signedIn(false); return; }
+                    if (!res.ok) { show(status, 'error', res.body.error || 'Could not save'); return; }
+                    show(status, 'ok', 'Added. It is live on the site now.');
+                    e.target.reset();
+                    load();
+                })
+                .catch(function () { show(status, 'error', 'Could not reach the server.'); });
+        });
+
+        listEl.addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-remove]');
+            if (!btn) return;
+            if (!confirm('Remove this date from the website?')) return;
+
+            fetch('/api/events?id=' + encodeURIComponent(btn.dataset.remove), {
+                method: 'DELETE',
+                headers: authHeaders()
+            })
+                .then(function (r) { if (r.status === 401) signedIn(false); else load(); })
+                .catch(function () { });
+        });
+
+        document.getElementById('logout').addEventListener('click', function () {
+            token = null;
+            try { sessionStorage.removeItem(KEY); } catch (e) { }
+            signedIn(false);
+        });
+
+        signedIn(!!token);
+    })();
+</script>

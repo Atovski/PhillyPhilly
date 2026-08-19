@@ -1,0 +1,76 @@
+<!--meta
+{
+  "url": "/find-us/",
+  "nav": "findus",
+  "priority": "0.8",
+  "title": "Where to Find Us | Trading Calendar | Philly Philly Food Truck",
+  "description": "See where the Philly Philly food truck is trading next. Markets, festivals and street food events across London and the South East, updated as dates are confirmed.",
+  "jsonld": {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Philly Philly trading calendar",
+    "url": "https://phillyphilly.co.uk/find-us/",
+    "about": { "@id": "https://phillyphilly.co.uk/#business" }
+  }
+}
+meta-->
+
+<section class="page-head">
+    <div class="wrap">
+        <span class="eyebrow">Public trading</span>
+        <h1>Where to find us</h1>
+        <p>Markets, festivals and street food events. Dates go up here as soon as they are confirmed — follow
+            <a href="{{site.instagram}}" rel="noopener me">{{site.instagramHandle}}</a> for last-minute changes.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <div class="section-head">
+            <h2>Coming up next</h2>
+        </div>
+
+        <div id="upcoming-events" class="event-list" data-limit="10">
+            <p class="loading">Loading upcoming dates…</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="wrap">
+        <div class="section-head">
+            <h2>Monthly calendar</h2>
+            <p class="lead">Browse ahead to see where the truck is parked.</p>
+        </div>
+
+        <div class="calendar-wrap">
+            <div class="calendar-controls">
+                <button type="button" class="control-btn" id="prevMonth" aria-label="Previous month">&#8249;</button>
+                <h2 id="calendar-title">Loading…</h2>
+                <button type="button" class="control-btn" id="nextMonth" aria-label="Next month">&#8250;</button>
+            </div>
+
+            <div class="calendar-head" aria-hidden="true">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div id="calendar-grid" class="calendar-grid"></div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <h2>Want us at your event instead?</h2>
+    <p>We take private bookings alongside our public trading dates — weddings, corporate days and parties across
+        {{site.baseCity}} and the South East.</p>
+    <div class="cta-actions">
+        <a href="/contact/" class="btn btn-accent">Get a quote</a>
+        <a href="/weddings/" class="btn btn-light">Wedding catering</a>
+    </div>
+</section>

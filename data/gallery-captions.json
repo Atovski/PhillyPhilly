@@ -1,0 +1,8 @@
+{
+  "_readme": "Optional captions, keyed by photo slug (the filename without extension, lower-case). Captions become the alt text and help image SEO. Anything left out falls back to a generic alt. Example: \"philly-12\": \"Serving cheesesteaks at an evening wedding reception in Essex\"",
+
+  "philly-6": "The Philly Philly truck trading at a UK festival",
+  "philly-12": "Cheesesteaks served at an evening wedding reception",
+  "philly-27": "Street food catering at a corporate event",
+  "philly-33": "Guests queueing at a private party booking"
+}

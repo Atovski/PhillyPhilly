@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Philly Philly</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Admin Specific Styles - Inline for simplicity or move to style.css */
+        body {
+            background-color: #f4f6f8;
+        }
+
+        .admin-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        /* Hidden by default until login */
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .event-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .alert {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login View -->
+    <div id="login-view" class="login-box">
+        <img src="img/philly-philly-logo.png" alt="Logo" style="height: 50px; margin-bottom: 20px;">
+        <h2>Admin Login</h2>
+        <div id="login-alert" class="alert alert-error"></div>
+        <form id="login-form">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" class="form-control" placeholder="admin@example.com" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" class="form-control" placeholder="******" required>
+            </div>
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="dashboard-view" class="admin-container dashboard">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1>Calendar Manager</h1>
+            <button id="logout-btn" class="secondary-button"
+                style="padding: 5px 15px; font-size: 0.9rem;">Logout</button>
+        </div>
+
+        <!-- Add Event Form -->
+        <div class="calendar-container" style="background: white; margin-bottom: 30px;">
+            <h3>Add New Event</h3>
+            <div id="event-alert" class="alert alert-success"></div>
+            <form id="add-event-form">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="event-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="event-type" class="form-control">
+                            <option value="market">Market (Default)</option>
+                            <option value="festival">Festival</option>
+                            <option value="concert">Concert</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Location / Name</label>
+                    <input type="text" id="event-location" class="form-control" placeholder="e.g. Camden Market"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label>Event Link (Optional)</label>
+                    <input type="url" id="event-link" class="form-control" placeholder="https://example.com/tickets">
+                    <small style="color: #666; font-size: 0.8rem;">Leave empty if no link is needed.</small>
+                </div>
+                <button type="submit" class="btn-primary">Add Event</button>
+            </form>
+        </div>
+
+        <!-- Event List -->
+        <h3>Your Upcoming Events</h3>
+        <div id="admin-event-list" class="event-list" style="margin-bottom: 40px;">
+            <div style="padding: 20px; text-align: center;">Loading events...</div>
+        </div>
+
+        <!-- Gallery Manager -->
+        <hr style="border: 0; border-top: 1px solid #ddd; margin: 40px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1>Gallery Manager</h1>
+        </div>
+
+        <!-- Upload Photo Form -->
+        <div class="calendar-container" style="background: white; margin-bottom: 30px;">
+            <h3>Upload New Photo</h3>
+            <div id="gallery-alert" class="alert alert-success"></div>
+            <form id="upload-photo-form">
+                <div class="form-group">
+                    <label>Select Photo</label>
+                    <input type="file" id="photo-file" class="form-control" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label>Caption (Optional)</label>
+                    <input type="text" id="photo-caption" class="form-control" placeholder="e.g. Delicious Burger">
+                </div>
+                <button type="submit" class="btn-primary">Upload Photo</button>
+            </form>
+        </div>
+
+        <!-- Photo List -->
+        <h3>Gallery Photos</h3>
+        <div id="admin-gallery-list" class="event-list">
+            <div style="padding: 20px; text-align: center;">Loading photos...</div>
+        </div>
+    </div>
+
+    <!-- Config & Logic -->
+    <script>
+        // UI Elements
+        const loginView = document.getElementById('login-view');
+        const dashboardView = document.getElementById('dashboard-view');
+        const loginForm = document.getElementById('login-form');
+        const addEventForm = document.getElementById('add-event-form');
+        const adminEventList = document.getElementById('admin-event-list');
+
+        // Simple Session Check
+        const isLoggedIn = localStorage.getItem('authToken');
+        if (isLoggedIn) {
+            showDashboard();
+        } else {
+            showLogin();
+        }
+
+        function showLogin() {
+            loginView.style.display = 'block';
+            dashboardView.style.display = 'none';
+        }
+
+        function showDashboard() {
+            loginView.style.display = 'none';
+            dashboardView.style.display = 'block';
+            loadEvents();
+        }
+
+        // Login Logic
+        loginForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    localStorage.setItem('authToken', data.token);
+                    showDashboard();
+                } else {
+                    const alert = document.getElementById('login-alert');
+                    alert.textContent = "Invalid Password (Try: admin123)";
+                    alert.style.display = 'block';
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Server Error");
+            }
+        });
+
+        // Logout logic
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            showLogin();
+        });
+
+        // Load Events
+        async function loadEvents() {
+            try {
+                const res = await fetch('/api/events');
+                const events = await res.json();
+
+                // Sort by Date
+                events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                adminEventList.innerHTML = '';
+                if (events.length === 0) {
+                    adminEventList.innerHTML = '<div style="padding:20px; text-align:center;">No upcoming events found.</div>';
+                    return;
+                }
+
+                events.forEach(event => {
+                    const div = document.createElement('div');
+                    div.className = 'event-item';
+                    div.innerHTML = `
+                        <div>
+                            <strong>${event.date}</strong> - ${event.location}
+                            <br><small style="color:#666">${event.type}</small>
+                        </div>
+                        <button class="btn-danger" onclick="deleteEvent('${event.id}')">Delete</button>
+                    `;
+                    adminEventList.appendChild(div);
+                });
+            } catch (err) {
+                console.error(err);
+                adminEventList.innerHTML = "Error loading events. Ensure server is running.";
+            }
+        }
+
+        // Add Event
+        addEventForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const date = document.getElementById('event-date').value;
+            const location = document.getElementById('event-location').value;
+            const type = document.getElementById('event-type').value;
+            const link = document.getElementById('event-link').value;
+
+            try {
+                const res = await fetch('/api/events', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ date, location, type, link })
+                });
+
+                if (res.ok) {
+                    const alert = document.getElementById('event-alert');
+                    alert.textContent = "Event added successfully!";
+                    alert.style.display = 'block';
+                    addEventForm.reset();
+                    loadEvents(); // Refresh list
+                    setTimeout(() => alert.style.display = 'none', 3000);
+                } else {
+                    const errorData = await res.json();
+                    console.error("Error adding event:", errorData.message);
+                    alert("Error adding event: " + errorData.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Server Error adding event.");
+            }
+        });
+
+        // Delete Event
+        window.deleteEvent = async function (id) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                try {
+                    const res = await fetch(`/api/events/${id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        loadEvents();
+                    } else {
+                        const errorData = await res.json();
+                        console.error("Error deleting event:", errorData.message);
+                        alert("Error deleting event: " + errorData.message);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Server Error deleting event.");
+                }
+            }
+        }
+
+        /* ==========================
+           GALLERY LOGIC
+           ========================== */
+        const uploadPhotoForm = document.getElementById('upload-photo-form');
+        const adminGalleryList = document.getElementById('admin-gallery-list');
+
+        // Load Gallery
+        async function loadGallery() {
+            try {
+                const res = await fetch('/api/gallery');
+                const photos = await res.json();
+
+                adminGalleryList.innerHTML = '';
+                if (photos.length === 0) {
+                    adminGalleryList.innerHTML = '<div style="padding:20px; text-align:center;">No photos found.</div>';
+                    return;
+                }
+
+                photos.forEach(photo => {
+                    const div = document.createElement('div');
+                    div.className = 'event-item';
+                    div.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <img src="/img/gallery/${photo.filename}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+                            <div>
+                                <strong>${photo.caption || 'No Caption'}</strong>
+                                <br><small style="color:#666">${new Date(photo.date).toLocaleDateString()}</small>
+                            </div>
+                        </div>
+                        <button class="btn-danger" onclick="deletePhoto('${photo.id}')">Delete</button>
+                    `;
+                    adminGalleryList.appendChild(div);
+                });
+            } catch (err) {
+                console.error(err);
+                adminGalleryList.innerHTML = "Error loading gallery.";
+            }
+        }
+
+        // Upload Photo
+        uploadPhotoForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const fileInput = document.getElementById('photo-file');
+            const caption = document.getElementById('photo-caption').value;
+            const file = fileInput.files[0];
+
+            if (!file) return;
+
+            // Convert to Base64
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = async function () {
+                const imageBase64 = reader.result;
+
+                try {
+                    const res = await fetch('/api/gallery', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ imageBase64, caption })
+                    });
+
+                    if (res.ok) {
+                        const alert = document.getElementById('gallery-alert');
+                        alert.textContent = "Photo uploaded successfully!";
+                        alert.style.display = 'block';
+                        uploadPhotoForm.reset();
+                        loadGallery();
+                        setTimeout(() => alert.style.display = 'none', 3000);
+                    } else {
+                        alert("Upload failed.");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Server Error uploading photo.");
+                }
+            };
+        });
+
+        // Delete Photo
+        window.deletePhoto = async function (id) {
+            if (confirm('Are you sure you want to delete this photo?')) {
+                try {
+                    const res = await fetch(`/api/gallery/${id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        loadGallery();
+                    } else {
+                        alert("Error deleting photo.");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Server error.");
+                }
+            }
+        }
+
+        // Load gallery on dashboard show
+        const originalShowDashboard = showDashboard;
+        showDashboard = function () {
+            originalShowDashboard(); // Call original (shows view, loads events)
+            loadGallery(); // Also load gallery
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Calendar | Philly Philly Food Truck</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header id="header">
+        <div class="header-container">
+            <a href="index.html">
+                <img src="img/Philly Philly Logo.ai.png" alt="Philly Philly Food Truck Logo" class="logo">
+            </a>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#menu">Menu</a></li>
+                    <li><a href="index.html#location">Find Us</a></li>
+                    <li><a href="index.html#gallery">Gallery</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="calendar-page-header">
+            <h1>Monthly Schedule</h1>
+            <p>Find out where Philly Philly is parking next!</p>
+        </div>
+
+        <section>
+            <div class="calendar-wrapper">
+                <div class="calendar-controls">
+                    <button class="control-btn" id="prevMonth" aria-label="Previous Month">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2 id="calendar-month-title">Loading...</h2>
+                    <button class="control-btn" id="nextMonth" aria-label="Next Month">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="calendar-grid-header">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+
+                <div id="calendar-grid" class="calendar-grid">
+                    <!-- Grid populated by JavaScript -->
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="index.html#location" class="secondary-button"><i class="fas fa-arrow-left"></i> Back to
+                        Home</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Philly Philly Food Truck. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://instagram.com/phillyphilly.uk" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="mailto:info@phillyphilly.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="script.js"></script>
+    <script>
+        // Copy of header scroll logic for this page
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                header.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Mobile Menu Logic
+        document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
