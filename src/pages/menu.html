@@ -18,8 +18,7 @@
         "hasMenuItem": [
           { "@type": "MenuItem", "name": "Philly Cheesesteak", "description": "Thin-sliced beef, caramelised onions and cheddar cheese sauce in a soft roll." },
           { "@type": "MenuItem", "name": "New Orleans Chicken", "description": "Crisp spiced chicken, mildly hot and aromatic." },
-          { "@type": "MenuItem", "name": "Philly Cheesesteak Wrap", "description": "Cheesesteak filling in a soft tortilla." },
-          { "@type": "MenuItem", "name": "New Orleans Chicken Wrap", "description": "Spiced chicken wrapped with salad and sauce." }
+          { "@type": "MenuItem", "name": "Philly Cheesesteak Wrap", "description": "Cheesesteak filling in a soft tortilla." }
         ]
       },
       {
@@ -79,17 +78,6 @@ meta-->
                         standing up with a drink in your other hand.</p>
                 </div>
             </article>
-
-            <!-- TODO-CLIENT: this photo is currently a duplicate of the cheesesteak wrap.
-                 Needs a real photograph of the chicken wrap. -->
-            <article class="card menu-item">
-                <img src="/assets/img/menu/menu-6.webp" alt="New Orleans chicken wrap" width="800" height="600"
-                    loading="lazy" decoding="async">
-                <div class="card-body">
-                    <h3>New Orleans Chicken Wrap</h3>
-                    <p>Our spiced chicken wrapped up with salad and sauce. Mildly spicy and full of flavour.</p>
-                </div>
-            </article>
         </div>
 
         <div class="section-head mt-4">
@@ -144,52 +132,134 @@ meta-->
              molluscs, mustard, tree nuts, peanuts, sesame, soybeans, sulphur dioxide/sulphites. -->
 
         <div class="table-scroll mt-4">
-            <table>
+            <table class="allergen-table">
                 <thead>
                     <tr>
-                        <th scope="col">Dish</th>
-                        <th scope="col">Gluten</th>
-                        <th scope="col">Milk</th>
-                        <th scope="col">Egg</th>
-                        <th scope="col">Soya</th>
-                        <th scope="col">Mustard</th>
-                        <th scope="col">Sesame</th>
-                        <th scope="col">Sulphites</th>
+                        <th scope="col">Dishes</th>
                         <th scope="col">Celery</th>
+                        <th scope="col">Cereals containing gluten</th>
+                        <th scope="col">Crustaceans</th>
+                        <th scope="col">Eggs</th>
+                        <th scope="col">Fish</th>
+                        <th scope="col">Lupin</th>
+                        <th scope="col">Milk</th>
+                        <th scope="col">Mollusc</th>
+                        <th scope="col">Mustard</th>
+                        <th scope="col">Nuts</th>
+                        <th scope="col">Peanuts</th>
+                        <th scope="col">Sesame seeds</th>
+                        <th scope="col">Soya</th>
+                        <th scope="col">Sulphur Dioxide</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">Philly Cheesesteak</th>
-                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">New Orleans Chicken</th>
-                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Philly Cheesesteak Wrap</th>
-                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">New Orleans Chicken Wrap</th>
-                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
-                    </tr>
-                    <tr>
                         <th scope="row">Philly Loaded Fries</th>
-                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Philly Cheesesteak Sandwich</th>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">New Orleans Chicken Box</th>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Chips</th>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Mac &amp; Cheese Croquettes</th>
-                        <td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Chimichurri Loaded</th>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
+                        <td><span class="allergen-no" aria-label="No">—</span></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <p class="muted mt-4">Allergen details are being finalised with our suppliers. In the meantime, please ask
-            a member of our team — we will always give you a straight answer, and if we are not certain we will say
-            so.</p>
+        <p class="muted mt-4">Please speak to a member of our team before ordering if you have any allergies or dietary requirements. We are always happy to check ingredients with you at the hatch.</p>
     </div>
 </section>
 

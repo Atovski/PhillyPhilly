@@ -1077,6 +1077,58 @@ th {
   font-weight: 700;
 }
 
+.allergen-table {
+  min-width: 980px;
+  text-align: center;
+}
+
+.allergen-table th,
+.allergen-table td {
+  text-align: center;
+  padding: 10px 8px;
+  vertical-align: middle;
+}
+
+.allergen-table thead th {
+  background: #eaf1e8;
+  color: var(--brand-primary);
+  font-size: 0.82rem;
+  line-height: 1.25;
+  padding: 12px 8px;
+  border-bottom: 2px solid var(--line);
+}
+
+.allergen-table th:first-child,
+.allergen-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: sticky;
+  left: 0;
+  background: var(--surface);
+  z-index: 2;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.04);
+}
+
+.allergen-table thead th:first-child {
+  background: #eaf1e8;
+  z-index: 3;
+}
+
+.allergen-yes {
+  display: inline-block;
+  color: #16a34a;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.allergen-no {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
 /* Footer ------------------------------------------------------------------ */
 
 .site-footer {

@@ -46,7 +46,7 @@ async function main() {
   // ---- Gallery -----------------------------------------------------------
   const galleryDir = path.join(ROOT, 'img', 'gallery');
   const photos = fs.existsSync(galleryDir)
-    ? fs.readdirSync(galleryDir).filter((f) => /\.(jpe?g|png)$/i.test(f))
+    ? fs.readdirSync(galleryDir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
     : [];
 
   console.log(`\nGallery (${photos.length} photos)`);
@@ -56,6 +56,21 @@ async function main() {
     await emit(src, path.join(OUT, 'gallery', 'thumb', `${slug}.webp`), 600, 70, { quiet: true });
     await emit(src, path.join(OUT, 'gallery', 'full', `${slug}.webp`), 1600, 78, { quiet: true });
   }
+
+  // Prune any derivatives whose source image was deleted from img/gallery/
+  const validSlugs = new Set(photos.map((f) => path.parse(f).name.toLowerCase()));
+  for (const sub of ['thumb', 'full']) {
+    const dir = path.join(OUT, 'gallery', sub);
+    if (fs.existsSync(dir)) {
+      for (const f of fs.readdirSync(dir)) {
+        const slug = path.parse(f).name.toLowerCase();
+        if (!validSlugs.has(slug)) {
+          fs.unlinkSync(path.join(dir, f));
+        }
+      }
+    }
+  }
+
   console.log(`  done -> assets/img/gallery/{thumb,full}`);
 
   // ---- Menu (SVG wrappers around raster photos) --------------------------
