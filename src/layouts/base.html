@@ -46,17 +46,26 @@
         });
     </script>
 
-    <!-- TODO-CLIENT: paste the GA4 / Google Ads tag here once the accounts exist.
-         Uncomment and replace G-XXXXXXXXXX:
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- TODO-CLIENT: paste the Google Tag Manager container here once it exists.
+         GA4, Meta Pixel and Google Ads conversions are configured INSIDE the GTM
+         container (not in this file) — GTM reads the consent state set above and
+         the dataLayer events pushed by assets/js/main.js (phone_click, email_click,
+         whatsapp_click, enquiry_submitted). Uncomment and replace GTM-XXXXXXX:
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-XXXXXXX');</script>
     -->
 </head>
 
 <body>
+    <!-- TODO-CLIENT: paste the GTM <noscript> tag here once the container exists.
+         Uncomment and replace GTM-XXXXXXX:
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    -->
     <a href="#main" class="skip-link">Skip to content</a>
 
     <header class="site-header" id="header">

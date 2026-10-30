@@ -95,7 +95,7 @@ Kodda `TODO-CLIENT` diye aratınca hepsi çıkar. Kritik olanlar:
 | Chicken wrap fotoğrafı | `img/menu-6.svg` | Şu an cheesesteak wrap ile aynı fotoğraf |
 | Gerçek müşteri yorumları | ana sayfa (hazır blok yorum satırında) | Uydurma yorum ASA/CAP kurallarına aykırı — sadece gerçekleri koy |
 | Formspree/Web3Forms anahtarı | `src/data/site.json` → `formAccessKey` | Bu olmadan teklif formu çalışmaz |
-| GA4 / Google Ads etiketi | `src/layouts/base.html` (yorum satırında hazır) | Reklamdan önce şart |
+| GTM container ID (GA4 + Meta Pixel + Google Ads bunun içinde kurulur) | `src/layouts/base.html` (head + body, yorum satırında hazır) | Reklamdan önce şart |
 | Organiser Pack PDF | `festivals-organisers.html` | Tek tıkla indirilen belge paketi ciddi fark yaratıyor |
 
 ---
