@@ -8,3 +8,6 @@ Thumbs.db
 # optional — if the deploy platform runs the image step for you, keep them out;
 # if it does not, delete this line so dist/ can be built from a clean checkout.
 # assets/img/gallery/
+
+# Local editor/tool settings
+.claude/

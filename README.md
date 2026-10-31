@@ -1,7 +1,8 @@
 # Philly Philly — phillyphilly.co.uk
 
 Statik, çok sayfalı pazarlama sitesi. Bağımlılığı yok (görsel işleme dışında),
-build adımı 15 satırlık bir Node script'i. Cloudflare Pages'e deploy edilir.
+build adımı 15 satırlık bir Node script'i. UKNode (cPanel) hosting'e GitHub
+Actions üzerinden FTP ile deploy edilir.
 
 ---
 
@@ -20,8 +21,9 @@ img/                    ORİJİNAL görseller (kaynak — bunlara dokunulmaz)
 data/
   events.json           Statik yedek takvim (API yoksa bu okunur)
   gallery-captions.json Foto açıklamaları (alt text + görsel SEO)
-functions/              Cloudflare Pages Functions — admin API
-public/                 _headers ve _redirects (site köküne kopyalanır)
+functions/              Eski Cloudflare admin API'si — UKNode'da çalışmaz
+public/                 .htaccess: HTTPS, yönlendirmeler, güvenlik/önbellek başlıkları
+.github/workflows/      main'e her push'ta build alıp FTP ile yayına gönderir
 scripts/                build / görsel optimizasyon / lokal sunucu
 dist/                   BUILD ÇIKTISI — git'e girmez, elle düzenlenmez
 _legacy/                Eski tek sayfalık site (referans için duruyor, silinebilir)
@@ -55,30 +57,29 @@ tek yerde değiştirirsin, 15 sayfaya birden yansır.
 
 ### Etkinlik takvimi
 
-Site sahibi `/admin/` adresinden şifreyle girip tarih ekler/siler. Kod veya deploy
-gerekmez, değişiklik anında yayına girer.
+`data/events.json` dosyasını düzenle, push et — birkaç dakika içinde yayında.
 
 ---
 
-## Deploy — Cloudflare Pages (ücretsiz)
+## Deploy — UKNode (cPanel)
+
+Sunucuya sadece `dist/` (build çıktısı) gider; kaynak kod, `.git` ve `_legacy/`
+hiçbir zaman `public_html` içine girmez.
 
 **Tek seferlik kurulum:**
 
-1. Projeyi bir GitHub reposuna push et.
-2. Cloudflare Dashboard → Workers & Pages → **Create** → **Pages** → **Connect to Git** → repoyu seç.
-3. Build ayarları:
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. **Settings → Environment variables** (ikisini de *Secret* olarak ekle):
-   - `ADMIN_PASSWORD` — `/admin/` girişi için şifre
-   - `AUTH_SECRET` — uzun rastgele bir metin (parola üretici ile üret)
-5. **Settings → Bindings → KV namespace**: yeni bir namespace oluştur,
-   değişken adı **`EVENTS`** olacak şekilde bağla.
-   (Bu adım atlanırsa site yine çalışır; sadece `/admin/` devre dışı kalır ve
-   takvim `data/events.json` dosyasından okunur.)
-6. **Custom domains** → `phillyphilly.co.uk` ve `www.phillyphilly.co.uk` ekle.
+1. cPanel → **FTP Accounts** → yeni hesap, dizini `public_html` olacak şekilde.
+2. GitHub repo → **Settings → Secrets and variables → Actions** → üç secret:
+   - `FTP_SERVER` — cPanel'deki FTP sunucu adresi
+   - `FTP_USERNAME` — 1. adımdaki hesap (ör. `deploy@phillyphilly.co.uk`)
+   - `FTP_PASSWORD` — o hesabın şifresi
+3. GitHub → **Actions → Deploy → Run workflow** ile ilk yüklemeyi yap.
 
-Sonrası otomatik: her `git push` yeni sürümü yayına alır.
+Sonrası otomatik: `main`'e her push yeni sürümü yayına alır.
+
+**Takvim:** UKNode'da `functions/` çalışmadığı için `/admin/` paneli devre dışı.
+Takvim `data/events.json` dosyasından okunur; tarih eklemek için o dosyayı
+düzenleyip push etmek yeterli.
 
 ---
 

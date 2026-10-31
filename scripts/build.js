@@ -131,8 +131,8 @@ function build() {
   // Static assets and JSON data ------------------------------------------
   copyDir(path.join(ROOT, 'assets'), path.join(DIST, 'assets'));
   copyDir(path.join(ROOT, 'data'), path.join(DIST, 'data'));
-  // public/ lands at the site root — that is where Cloudflare Pages looks for
-  // _headers and _redirects.
+  // public/ lands at the site root — that is where the server looks for
+  // .htaccess.
   copyDir(path.join(ROOT, 'public'), DIST);
   for (const f of ['favicon.png']) {
     const s = path.join(ROOT, f);
