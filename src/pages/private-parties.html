@@ -1,29 +1,78 @@
 <!--meta
 {
   "url": "/private-parties/",
-  "priority": "0.8",
-  "title": "Private Party Food Truck Hire | Birthdays & Celebrations | Philly Philly",
-  "description": "Hire our cheesesteak truck for birthdays, christenings, graduations, garden parties and anniversaries across London and the South East. Fixed price per head.",
+  "nav": "parties",
+  "crumb": "Private parties",
+  "priority": "0.9",
+  "title": "Food Truck Hire for Parties in London | Birthdays & Private Events",
+  "description": "Hire a Philly cheesesteak food truck for your birthday, garden party or private event in London. Self-sufficient, cooked to order, fixed price per head. Quote within 24 hours.",
+  "image": "/assets/img/gallery/full/philly-67.webp",
   "jsonld": {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Private party food truck hire",
-    "serviceType": "Private event catering",
-    "url": "https://phillyphilly.co.uk/private-parties/",
-    "provider": { "@id": "https://phillyphilly.co.uk/#business" },
-    "areaServed": { "@type": "AdministrativeArea", "name": "London and South East England" }
+    "@graph": [
+      {
+        "@type": "Service",
+        "name": "Private party food truck hire",
+        "serviceType": "Private event catering",
+        "description": "Philly cheesesteak food truck hire for birthday parties, garden parties, engagement parties, christenings and other private events in London and the South East.",
+        "url": "https://phillyphilly.co.uk/private-parties/",
+        "provider": { "@id": "https://phillyphilly.co.uk/#business" },
+        "areaServed": [
+          { "@type": "City", "name": "London" },
+          { "@type": "AdministrativeArea", "name": "Essex" },
+          { "@type": "AdministrativeArea", "name": "Kent" },
+          { "@type": "AdministrativeArea", "name": "Surrey" },
+          { "@type": "AdministrativeArea", "name": "Hertfordshire" }
+        ],
+        "audience": { "@type": "Audience", "audienceType": "People hosting a private party or celebration" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does it cost to hire a food truck for a party in London?",
+            "acceptedAnswer": { "@type": "Answer", "text": "We quote a fixed price per head with a minimum spend. The figure depends on guest numbers, how long you want us serving and the postcode. Send your date, postcode and numbers and you will have a written quote within 24 hours." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can a food truck park at my house for a party?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Often, yes. A driveway, a wide private road, a field or a hall car park all work, as long as the truck can get in and park on firm, level ground with space for a queue. Send us a photo of the spot and we will tell you honestly whether it works." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need permission from the council to have a food truck at a party?",
+            "acceptedAnswer": { "@type": "Answer", "text": "On private land you usually do not. If the truck has to park on a public road, for example outside a terraced house, you may need a parking bay suspension from your London borough council. Check with them before you confirm the booking." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you need power or water from the house?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. The truck is self-sufficient and carries its own power and water, so nothing has to be plugged into your house." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you cater for vegetarians and children?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Vegetarian options are available if you tell us numbers when you book, and the menu goes down well with children. Tell us about allergies well before the party so we can talk you through what is in each dish." }
+          },
+          {
+            "@type": "Question",
+            "name": "How far in advance should I book a food truck for a party?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Summer Saturdays and December book up first, so for those a few months ahead is sensible. Weekday and off-season dates are often available at a couple of weeks' notice." }
+          }
+        ]
+      }
+    ]
   }
 }
 meta-->
 
 <section class="page-head">
     <div class="wrap">
-        <span class="eyebrow">Private hire</span>
-        <h1>Park a food truck at your party</h1>
-        <p>Birthdays, christenings, graduations, anniversaries, engagement parties, housewarmings — if you can fit
-            the truck, we can feed the room.</p>
+        <span class="eyebrow">Private party food truck hire</span>
+        <h1>Food truck hire for parties in London</h1>
+        <p>Birthdays, garden parties, engagements, christenings, graduations — if you can fit the truck, we can
+            feed the room. Proper Philly cheesesteaks, cooked to order at your own event.</p>
         <div class="cta-actions mt-4">
-            <a href="/contact/" class="btn btn-accent">Get a quote</a>
+            <a href="/contact/" class="btn btn-accent">Get a party quote</a>
             <a href="https://wa.me/{{site.whatsapp}}" class="btn btn-light" rel="noopener">WhatsApp us</a>
         </div>
     </div>
@@ -36,20 +85,22 @@ meta-->
                 <span class="eyebrow">How it works</span>
                 <h2>You host. We handle the food.</h2>
                 <p>No hired kitchen, no borrowed trestle tables, no you standing over a barbecue while everyone
-                    else has a drink. We turn up, cook, serve and take the mess with us.</p>
+                    else has a drink. We turn up, cook, serve and take the mess with us — street food catering
+                    without the washing up.</p>
                 <ul class="tick-list mt-4">
-                    <li>We can pitch on a driveway, a wide street, a car park, a field or a village hall forecourt</li>
+                    <li>We can pitch on a driveway, a wide private road, a car park, a field or a village hall
+                        forecourt</li>
                     <li>Completely self-sufficient — we do not plug into your house or run your taps</li>
                     <li>Everything cooked to order, so nothing is sitting around going cold</li>
+                    <li>Fixed price per head agreed in writing before you pay a deposit</li>
                     <li>We clear our own waste and leave the pitch clean</li>
                     <li>Vegetarian options available — let us know numbers when you book</li>
                 </ul>
-                <p class="mt-4"><a href="/faq/" class="card-link">See the full FAQs →</a></p>
             </div>
             <div>
-                <img src="/assets/img/gallery/full/philly-33.webp"
-                    alt="Guests queueing at the Philly Philly truck during a private party" width="1600" height="1200"
-                    loading="lazy" decoding="async">
+                <img src="/assets/img/gallery/full/philly-67.webp"
+                    alt="Families queueing at the Philly Philly food truck at an outdoor summer event"
+                    width="1600" height="1200" loading="lazy" decoding="async">
             </div>
         </div>
     </div>
@@ -58,26 +109,150 @@ meta-->
 <section class="section section-alt">
     <div class="wrap">
         <div class="section-head center">
-            <span class="eyebrow">Before you book</span>
-            <h2>Three things worth checking</h2>
+            <span class="eyebrow">What we get booked for</span>
+            <h2>Private events we cater</h2>
+            <p class="lead">A food truck suits almost any celebration where people would rather be standing,
+                chatting and queueing for something hot than sitting down to a plated meal.</p>
         </div>
-        <ol class="steps">
-            <li>
-                <h3>Can we get the truck in?</h3>
-                <p>Measure the narrowest point on the route and check for height barriers or low branches. Send us
-                    a photo if you are unsure — we would rather know now than on the day.</p>
-            </li>
-            <li>
-                <h3>Where will people queue?</h3>
-                <p>We need a bit of space in front of the hatch so a queue is not standing in a road or blocking a
-                    driveway.</p>
-            </li>
-            <li>
-                <h3>Are the neighbours or council involved?</h3>
-                <p>On private land you are usually fine. On a public road you may need permission from the council
-                    — worth a quick call to them before you confirm.</p>
-            </li>
-        </ol>
+
+        <div class="card-grid">
+            <article class="card">
+                <div class="card-body">
+                    <h3>Birthday parties</h3>
+                    <p>18th, 21st, 30th, 40th, 50th and 60th birthdays. The truck becomes part of the party, and
+                        nobody has to cook on their own birthday.</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-body">
+                    <h3>Garden &amp; house parties</h3>
+                    <p>Park on the drive or the side road, serve straight into the garden. Ideal for summer
+                        parties and anything with a marquee.</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-body">
+                    <h3>Engagement &amp; anniversary parties</h3>
+                    <p>Relaxed, social food for a celebration that does not need the formality of a wedding
+                        breakfast. See <a href="/weddings/">wedding food truck hire</a> for the big day itself.</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-body">
+                    <h3>Christenings &amp; family celebrations</h3>
+                    <p>Naming days, religious celebrations and family get-togethers in a hall, a church car park
+                        or back at the house afterwards.</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-body">
+                    <h3>Kids' &amp; family parties</h3>
+                    <p>Cheesesteaks, loaded fries and mac &amp; cheese croquettes are an easy sell to children,
+                        and the adults get proper food too.</p>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-body">
+                    <h3>Graduations, leaving dos &amp; reunions</h3>
+                    <p>Hall hire, pub gardens, sports clubs and social clubs. If the venue lets a food truck on
+                        site, we will handle the rest with them directly.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <div class="split">
+            <div>
+                <span class="eyebrow">Parties in London</span>
+                <h2>Parking, access and permits</h2>
+                <p>London parties come with London logistics. None of it is difficult, but it is worth knowing
+                    before you book.</p>
+                <ul class="tick-list mt-4">
+                    <li><strong>Private land is simplest.</strong> A driveway, a garden with side access, a hall
+                        or club car park, or a field needs no extra permission.</li>
+                    <li><strong>Street parking needs planning.</strong> On a residential street or in a controlled
+                        parking zone, you may need a parking bay suspension from your borough council. Apply early
+                        — councils need notice.</li>
+                    <li><strong>Central London is fine</strong>, it just needs more notice. Tell us the postcode
+                        and we will flag anything that affects access or travel before you commit.</li>
+                    <li><strong>No space at home?</strong> Many pubs, sports clubs, community halls and private
+                        hire venues happily take a food truck. Ask the venue, then let us talk to them.</li>
+                </ul>
+                <!-- TODO-CLIENT: confirm whether Congestion Charge / ULEZ applies to the truck and
+                     how it is shown on quotes, then state it here plainly. -->
+            </div>
+            <div>
+                <h3>Three things worth checking first</h3>
+                <ol class="steps steps-compact">
+                    <li>
+                        <h4>Can we get the truck in?</h4>
+                        <p>Measure the narrowest point on the route and check for height barriers or low branches.
+                            Send us a photo if you are unsure — we would rather know now than on the day.</p>
+                    </li>
+                    <li>
+                        <h4>Where will people queue?</h4>
+                        <p>We need a bit of space in front of the hatch so a queue is not standing in a road or
+                            blocking a driveway.</p>
+                    </li>
+                    <li>
+                        <h4>Is the council or venue involved?</h4>
+                        <p>On private land you are usually fine. On a public road, or at a hired venue, check what
+                            they need before you confirm.</p>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="wrap wrap-narrow">
+        <h2 class="center">Private party food truck hire: your questions</h2>
+
+        <div class="mt-4">
+            <details class="faq-item" open>
+                <summary>How much does it cost to hire a food truck for a party in London?</summary>
+                <p>We quote a fixed price per head with a minimum spend. The figure depends on guest numbers, how
+                    long you want us serving and the postcode. Send your date, postcode and numbers and you will
+                    have a written quote within 24 hours. Our <a href="/food-truck-hire-cost/">food truck hire cost
+                    guide</a> explains what moves the price.</p>
+                <!-- TODO-CLIENT: add "Private parties from £X per head, minimum spend £Y" once confirmed. -->
+            </details>
+            <details class="faq-item">
+                <summary>Can a food truck park at my house for a party?</summary>
+                <p>Often, yes. A driveway, a wide private road, a field or a hall car park all work, as long as the
+                    truck can get in and park on firm, level ground with space for a queue. Send us a photo of the
+                    spot and we will tell you honestly whether it works.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Do I need permission from the council?</summary>
+                <p>On private land you usually do not. If the truck has to park on a public road, for example
+                    outside a terraced house, you may need a parking bay suspension from your London borough
+                    council. Check with them before you confirm the booking.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Do you need power or water from the house?</summary>
+                <p>No. The truck is self-sufficient and carries its own power and water, so nothing has to be
+                    plugged into your house.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Can you cater for vegetarians and children?</summary>
+                <p>Yes. Vegetarian options are available if you tell us numbers when you book, and the menu goes
+                    down well with children. Tell us about allergies well before the party so we can talk you
+                    through what is in each dish — see our <a href="/menu/#allergens">allergen information</a>.</p>
+            </details>
+            <details class="faq-item">
+                <summary>How far in advance should I book?</summary>
+                <p>Summer Saturdays and December book up first, so for those a few months ahead is sensible.
+                    Weekday and off-season dates are often available at a couple of weeks' notice.</p>
+            </details>
+        </div>
+
+        <p class="center mt-4">Planning an office do instead? See <a href="/corporate-events/">corporate event
+                catering</a> or <a href="/christmas-party-catering/">Christmas party catering</a>.</p>
     </div>
 </section>
 
