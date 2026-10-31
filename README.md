@@ -1,8 +1,8 @@
 # Philly Philly — phillyphilly.co.uk
 
 Statik, çok sayfalı pazarlama sitesi. Bağımlılığı yok (görsel işleme dışında),
-build adımı 15 satırlık bir Node script'i. UKNode (cPanel) hosting'e GitHub
-Actions üzerinden FTP ile deploy edilir.
+build adımı 15 satırlık bir Node script'i. UKNode VPS'te nginx ile yayınlanır;
+`main`'e her push birkaç dakika içinde otomatik yayına girer.
 
 ---
 
@@ -22,8 +22,8 @@ data/
   events.json           Statik yedek takvim (API yoksa bu okunur)
   gallery-captions.json Foto açıklamaları (alt text + görsel SEO)
 functions/              Eski Cloudflare admin API'si — UKNode'da çalışmaz
-public/                 .htaccess: HTTPS, yönlendirmeler, güvenlik/önbellek başlıkları
-.github/workflows/      main'e her push'ta build alıp FTP ile yayına gönderir
+deploy/                 Sunucu kurulum script'i + nginx ayarı (yönlendirmeler, başlıklar)
+.github/workflows/      main'e her push'ta build alıp deploy dalına yazar
 scripts/                build / görsel optimizasyon / lokal sunucu
 dist/                   BUILD ÇIKTISI — git'e girmez, elle düzenlenmez
 _legacy/                Eski tek sayfalık site (referans için duruyor, silinebilir)
@@ -61,21 +61,21 @@ tek yerde değiştirirsin, 15 sayfaya birden yansır.
 
 ---
 
-## Deploy — UKNode (cPanel)
+## Deploy — UKNode VPS (nginx)
 
-Sunucuya sadece `dist/` (build çıktısı) gider; kaynak kod, `.git` ve `_legacy/`
-hiçbir zaman `public_html` içine girmez.
+`main`'e push → GitHub Actions build alır ve `dist/`'i `deploy` dalına yazar →
+sunucu bu dalı 2 dakikada bir çeker. GitHub'da sunucu şifresi/anahtarı tutulmaz;
+sunucuya kaynak kod değil, sadece build çıktısı gider.
 
-**Tek seferlik kurulum:**
+**Tek seferlik kurulum** (sunucuda, root olarak):
 
-1. cPanel → **FTP Accounts** → yeni hesap, dizini `public_html` olacak şekilde.
-2. GitHub repo → **Settings → Secrets and variables → Actions** → üç secret:
-   - `FTP_SERVER` — cPanel'deki FTP sunucu adresi
-   - `FTP_USERNAME` — 1. adımdaki hesap (ör. `deploy@phillyphilly.co.uk`)
-   - `FTP_PASSWORD` — o hesabın şifresi
-3. GitHub → **Actions → Deploy → Run workflow** ile ilk yüklemeyi yap.
+```bash
+curl -fsSL https://raw.githubusercontent.com/Atovski/PhillyPhilly/main/deploy/server-setup.sh | sudo bash
+```
 
-Sonrası otomatik: `main`'e her push yeni sürümü yayına alır.
+Script nginx sitesini (`deploy/nginx.conf`) kurar, Let's Encrypt sertifikası alır
+ve tekrar çalıştırılabilir. DNS (Wix): `@` için A kaydı → `212.100.173.74`,
+`www` için CNAME → `phillyphilly.co.uk`.
 
 **Takvim:** UKNode'da `functions/` çalışmadığı için `/admin/` paneli devre dışı.
 Takvim `data/events.json` dosyasından okunur; tarih eklemek için o dosyayı

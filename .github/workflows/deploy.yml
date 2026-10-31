@@ -1,9 +1,16 @@
 name: Deploy
 
+# Builds the site and publishes dist/ to the `deploy` branch. The server pulls
+# that branch every couple of minutes (see deploy/server-setup.sh), so no server
+# credentials ever live in GitHub.
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 concurrency:
   group: deploy
@@ -22,11 +29,11 @@ jobs:
       # build.js only uses Node built-ins, so no npm install is needed.
       - run: npm run build
 
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - uses: peaceiris/actions-gh-pages@v4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./dist/
-          server-dir: ./
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: deploy
+          publish_dir: ./dist
+          force_orphan: true
+          enable_jekyll: true
+          commit_message: Build

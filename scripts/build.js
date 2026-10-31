@@ -131,8 +131,7 @@ function build() {
   // Static assets and JSON data ------------------------------------------
   copyDir(path.join(ROOT, 'assets'), path.join(DIST, 'assets'));
   copyDir(path.join(ROOT, 'data'), path.join(DIST, 'data'));
-  // public/ lands at the site root — that is where the server looks for
-  // .htaccess.
+  // public/ (if present) lands at the site root.
   copyDir(path.join(ROOT, 'public'), DIST);
   for (const f of ['favicon.png']) {
     const s = path.join(ROOT, f);
