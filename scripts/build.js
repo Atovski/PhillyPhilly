@@ -70,6 +70,30 @@ function render(template, page) {
   });
 }
 
+/**
+ * Page JSON-LD. A page's own "jsonld" may be a single node or an @graph; if
+ * the page sets "crumb" (its short name), a Home > Page BreadcrumbList is
+ * added to the same graph so Google can show the trail in results.
+ */
+function jsonld(meta, url) {
+  const nodes = [];
+  if (meta.jsonld) {
+    const { '@context': _, '@graph': graph, ...node } = meta.jsonld;
+    nodes.push(...(graph || [node]));
+  }
+  if (meta.crumb && url !== '/') {
+    nodes.push({
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+        { '@type': 'ListItem', position: 2, name: meta.crumb, item: site.url + url },
+      ],
+    });
+  }
+  if (!nodes.length) return '';
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': nodes });
+}
+
 function build() {
   rm(DIST);
   ensure(DIST);
@@ -85,12 +109,12 @@ function build() {
       canonical: site.url + url,
       robots: meta.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large',
       ogImage: site.url + (meta.image || '/assets/img/og-default.jpg'),
-      jsonld: meta.jsonld ? JSON.stringify(meta.jsonld) : '',
+      jsonld: jsonld(meta, url),
       body,
     };
 
     // Nav highlighting: the layout renders class="{{page.nav_menu}}" style hooks.
-    for (const key of ['home', 'menu', 'weddings', 'corporate', 'findus', 'gallery', 'about', 'contact']) {
+    for (const key of ['home', 'menu', 'parties', 'weddings', 'corporate', 'findus', 'gallery', 'about', 'contact']) {
       page[`nav_${key}`] = meta.nav === key ? 'active' : '';
     }
 
