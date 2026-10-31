@@ -297,6 +297,26 @@ meta-->
                     <p class="loading">Loading upcoming dates…</p>
                 </div>
 
+                <div class="calendar-wrap calendar-compact mt-4">
+                    <div class="calendar-controls">
+                        <button type="button" class="control-btn" id="prevMonth" aria-label="Previous month">&#8249;</button>
+                        <h3 id="calendar-title">Loading…</h3>
+                        <button type="button" class="control-btn" id="nextMonth" aria-label="Next month">&#8250;</button>
+                    </div>
+
+                    <div class="calendar-head" aria-hidden="true">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+
+                    <div id="calendar-grid" class="calendar-grid"></div>
+                </div>
+
                 <div class="mt-4">
                     <a href="/find-us/" class="btn btn-outline">Full trading calendar</a>
                 </div>

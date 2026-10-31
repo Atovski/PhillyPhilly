@@ -789,6 +789,36 @@ a.event-row:hover {
   line-height: 1.3;
 }
 
+/* Smaller variant for the homepage, where the calendar shares a column. */
+.calendar-compact {
+  padding: 18px;
+}
+
+.calendar-compact .calendar-controls h3 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.calendar-compact .control-btn {
+  width: 36px;
+  height: 36px;
+}
+
+.calendar-compact .calendar-grid,
+.calendar-compact .calendar-head {
+  gap: 4px;
+}
+
+.calendar-compact .calendar-cell {
+  min-height: 54px;
+  padding: 5px;
+  font-size: 0.68rem;
+}
+
+.calendar-compact .cell-event {
+  padding: 2px 4px;
+}
+
 /* Gallery ----------------------------------------------------------------- */
 
 .gallery-grid {
