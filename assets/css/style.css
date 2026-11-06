@@ -402,6 +402,41 @@ p {
   margin-right: 8px;
 }
 
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* FSA's smallest official badge style (3), kept small so it supports the hero rather than competing with it. */
+.hero-badges .fhrs-badge {
+  width: 116px;
+}
+
+.quality-seal {
+  flex: none;
+  width: 64px;
+  height: 64px;
+}
+
+.quality-seal .seal-arc {
+  fill: #fff;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.quality-seal .seal-big {
+  fill: #fff;
+  font-family: var(--font-display);
+  font-size: 31px;
+  font-weight: 700;
+}
+
+
 .hero-media {
   position: relative;
 }
