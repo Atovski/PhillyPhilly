@@ -418,6 +418,7 @@
       evs.map(function (ev) {
         var meta = [ev.time, TYPE_LABEL[ev.type] || 'Event'].filter(Boolean).join(' · ');
         return '<div class="event-dialog-item">' +
+          '<span class="event-dialog-label">' + ({ closed: 'Not trading', private: 'Private booking' }[ev.type] || 'Find the truck at') + '</span>' +
           '<strong>' + escapeHtml(ev.location) + '</strong>' +
           '<span class="event-dialog-meta">' + escapeHtml(meta) + '</span>' +
           (ev.description ? '<p>' + escapeHtml(ev.description) + '</p>' : '') +
@@ -429,6 +430,10 @@
           (ev.info ? '<a class="event-more" href="' + escapeHtml(ev.info) + '" rel="noopener">More info →</a>' : '') +
           '</div></div>';
       }).join('') +
+      '<p class="event-dialog-foot">' +
+      (evs.some(function (ev) { return ev.type !== 'private' && ev.type !== 'closed'; })
+        ? 'Open to everyone — just turn up. ' : '') +
+      'Want the truck at your own event? <a href="/contact/">Get a quote</a></p>' +
       '</div>';
 
     if (dayDialog.showModal) dayDialog.showModal(); else dayDialog.setAttribute('open', '');
@@ -475,7 +480,7 @@
             ' aria-haspopup="dialog" aria-label="' + escapeHtml(day + ' ' + MONTHS_FULL[month] + ': ' + names) + '">' +
             '<span class="date-number">' + day + '</span>' +
             evs.map(function (e) { return '<span class="cell-event">' + escapeHtml(e.location) + '</span>'; }).join('') +
-            '<span class="cell-dot" aria-hidden="true"></span>' +
+            '<span class="cell-pin" aria-hidden="true">' + MAP_ICON + '</span>' +
             '</button>';
         }
 
