@@ -24,9 +24,34 @@ const MIME = {
   '.ico': 'image/x-icon',
 };
 
+// The live server proxies Google Calendar at /api/calendar.ics (deploy/nginx.conf).
+// Do the same here, reading the calendar ID from that file so there is one place to change it.
+function calendarId() {
+  const conf = fs.readFileSync(path.join(__dirname, '..', 'deploy', 'nginx.conf'), 'utf8');
+  const m = /set \$phillyphilly_calendar_id "([^"]+)"/.exec(conf);
+  return m ? m[1] : '';
+}
+
+async function proxyCalendar(res) {
+  const id = calendarId();
+  const feed = `https://calendar.google.com/calendar/ical/${encodeURIComponent(id)}/public/basic.ics`;
+  try {
+    const r = await fetch(feed);
+    res.writeHead(r.status, { 'Content-Type': 'text/calendar; charset=utf-8' });
+    res.end(await r.text());
+  } catch (e) {
+    res.writeHead(502).end('Calendar feed unavailable: ' + e.message);
+  }
+}
+
 http
   .createServer((req, res) => {
     const url = decodeURIComponent(req.url.split('?')[0]);
+
+    if (url === '/api/calendar.ics') {
+      proxyCalendar(res);
+      return;
+    }
 
     // Resolve inside DIST only — never let a request escape the output folder.
     let target = path.normalize(path.join(DIST, url));
