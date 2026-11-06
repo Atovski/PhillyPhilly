@@ -60,6 +60,7 @@ for f in /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf; do
   echo "    disabled $f (copy in /root/nginx-backup-$STAMP/)"
 done
 
+mkdir -p /var/cache/nginx   # parent of the calendar proxy cache
 curl -fsSL "$RAW/nginx.conf" -o /etc/nginx/sites-available/phillyphilly
 ln -sf /etc/nginx/sites-available/phillyphilly /etc/nginx/sites-enabled/phillyphilly
 if ! nginx -t; then

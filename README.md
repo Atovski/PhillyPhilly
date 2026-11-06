@@ -77,9 +77,13 @@ Script nginx sitesini (`deploy/nginx.conf`) kurar, Let's Encrypt sertifikası al
 ve tekrar çalıştırılabilir. DNS (Wix): `@` için A kaydı → `212.100.173.74`,
 `www` için CNAME → `phillyphilly.co.uk`.
 
-**Takvim:** UKNode'da `functions/` çalışmadığı için `/admin/` paneli devre dışı.
-Takvim `data/events.json` dosyasından okunur; tarih eklemek için o dosyayı
-düzenleyip push etmek yeterli.
+**Takvim:** Google Takvim'den okunur. nginx, takvimin herkese açık iCal adresini
+`/api/calendar.ics` olarak sunar (`deploy/nginx.conf`, 5 dk önbellek). Etkinlik adı =
+yer, Konum = adres (Maps linki olur), açıklamadaki link varsa o kullanılır. Adda
+"festival", "private", "closed" geçerse türü ona göre gösterilir. Haftalık tekrarlar,
+tek seferlik iptal/taşımalar ve çok günlü etkinlikler desteklenir. Takvim ID'si
+değişirse nginx.conf'ta güncellenip sunucuda `server-setup.sh` yeniden çalıştırılır.
+Feed alınamazsa site `data/events.json` dosyasına düşer.
 
 ---
 

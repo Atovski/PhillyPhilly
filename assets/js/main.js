@@ -120,14 +120,171 @@
       String(d.getDate()).padStart(2, '0');
   }
 
-  // Events come from the admin-backed API when it is available, and from the
-  // static file bundled with the build when it is not. Either way the calendar
-  // renders.
+  /* ------------------------------------------------ Google Calendar feed -- */
+
+  // nginx proxies the public Google Calendar iCal feed to /api/calendar.ics
+  // (see deploy/nginx.conf). Each calendar entry becomes one trading day:
+  //   title    -> where we are ("Canada Water Market")
+  //   location -> address, linked to Google Maps (a URL in the description wins)
+  //   type     -> guessed from the title: "festival", "concert", "private", "closed"
+  // Weekly/daily repeats, edited single repeats and multi-day events are handled.
+
+  var CALENDAR_DAYS_AHEAD = 400;
+
+  function icsUnescape(v) {
+    return v.replace(/\\n/gi, ' ').replace(/\\([,;\\])/g, '$1');
+  }
+
+  function icsDate(prop) {
+    // "20261107" or "20261107T110000" (local / TZID) or "20261107T110000Z" (UTC)
+    var m = /^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})\d{2}(Z)?)?/.exec(prop.value);
+    if (!m) return null;
+    if (m[6]) return new Date(Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5]));
+    return new Date(+m[1], m[2] - 1, +m[3]);
+  }
+
+  function isoDay(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+
+  function addDays(d, n) {
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  }
+
+  function parseIcs(text) {
+    var lines = text.replace(/\r?\n[ \t]/g, '').split(/\r?\n/);
+    var events = [];
+    var cur = null;
+    lines.forEach(function (line) {
+      if (line === 'BEGIN:VEVENT') { cur = { exdates: [] }; return; }
+      if (line === 'END:VEVENT') { if (cur) events.push(cur); cur = null; return; }
+      if (!cur) return;
+      var idx = line.indexOf(':');
+      if (idx < 0) return;
+      var name = line.slice(0, idx).split(';')[0].toUpperCase();
+      var prop = { value: line.slice(idx + 1), date: line.slice(0, idx).indexOf('VALUE=DATE') > 0 };
+      if (name === 'EXDATE') {
+        prop.value.split(',').forEach(function (v) {
+          var d = icsDate({ value: v });
+          if (d) cur.exdates.push(isoDay(d));
+        });
+      } else {
+        cur[name] = prop;
+      }
+    });
+    return events;
+  }
+
+  function guessType(title) {
+    var t = title.toLowerCase();
+    if (/closed|not trading|day off|holiday/.test(t)) return 'closed';
+    if (/private|wedding|party|corporate/.test(t)) return 'private';
+    if (/festival|fest\b/.test(t)) return 'festival';
+    if (/concert|gig/.test(t)) return 'concert';
+    return 'market';
+  }
+
+  function occurrences(ev, until) {
+    var start = icsDate(ev.DTSTART);
+    if (!start) return [];
+    start = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+
+    // Multi-day: an all-day DTEND is exclusive, a timed one is inclusive.
+    var span = 1;
+    if (ev.DTEND) {
+      var end = icsDate(ev.DTEND);
+      var endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+      span = Math.max(1, Math.round((endDay - start) / 864e5) + (ev.DTEND.date ? 0 : 1));
+    }
+
+    var starts = [start];
+    if (ev.RRULE) {
+      var rule = {};
+      ev.RRULE.value.split(';').forEach(function (p) { var kv = p.split('='); rule[kv[0]] = kv[1]; });
+      var step = parseInt(rule.INTERVAL || '1', 10);
+      var count = rule.COUNT ? parseInt(rule.COUNT, 10) : Infinity;
+      var last = rule.UNTIL ? icsDate({ value: rule.UNTIL }) : until;
+      if (last > until) last = until;
+      var byDay = (rule.BYDAY || '').split(',').filter(Boolean).map(function (d) {
+        return ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'].indexOf(d.slice(-2));
+      });
+
+      starts = [];
+      if (rule.FREQ === 'DAILY' || rule.FREQ === 'WEEKLY') {
+        var unit = rule.FREQ === 'DAILY' ? 1 : 7;
+        var weekStart = addDays(start, -start.getDay());
+        for (var n = 0; starts.length < count; n += step) {
+          var base = rule.FREQ === 'DAILY' ? addDays(start, n) : addDays(weekStart, n * unit);
+          if (base > last) break;
+          var days = rule.FREQ === 'WEEKLY'
+            ? (byDay.length ? byDay : [start.getDay()]).slice().sort().map(function (wd) { return addDays(base, wd); })
+            : [base];
+          for (var i = 0; i < days.length && starts.length < count; i++) {
+            if (days[i] >= start && days[i] <= last) starts.push(days[i]);
+          }
+        }
+      } else {
+        starts = [start]; // monthly/yearly repeats are rare for us; show the first date only
+      }
+    }
+
+    var out = [];
+    starts.forEach(function (s) {
+      if (ev.exdates.indexOf(isoDay(s)) >= 0) return;
+      for (var k = 0; k < span; k++) out.push(isoDay(addDays(s, k)));
+    });
+    return out;
+  }
+
+  function calendarToEvents(text) {
+    var raw = parseIcs(text);
+    var until = addDays(new Date(), CALENDAR_DAYS_AHEAD);
+
+    // An edited single repeat arrives as its own VEVENT with RECURRENCE-ID;
+    // drop that date from the series so it is not shown twice.
+    raw.forEach(function (ev) {
+      if (!ev['RECURRENCE-ID'] || !ev.UID) return;
+      var d = icsDate(ev['RECURRENCE-ID']);
+      raw.forEach(function (master) {
+        if (master !== ev && master.UID && master.UID.value === ev.UID.value && master.RRULE) {
+          master.exdates.push(isoDay(d));
+        }
+      });
+    });
+
+    var list = [];
+    raw.forEach(function (ev) {
+      if (ev.STATUS && ev.STATUS.value === 'CANCELLED') return;
+      var title = icsUnescape((ev.SUMMARY && ev.SUMMARY.value) || 'Philly Philly');
+      var place = ev.LOCATION ? icsUnescape(ev.LOCATION.value) : '';
+      var url = /https?:\/\/[^\s"<>\\]+/.exec(
+        (ev.DESCRIPTION ? icsUnescape(ev.DESCRIPTION.value) : '') + ' ' + place);
+      var link = url ? url[0]
+        : place ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(place) : '';
+      var type = guessType(title);
+      occurrences(ev, until).forEach(function (date) {
+        list.push({ date: date, location: title, type: type, link: link });
+      });
+    });
+    return list;
+  }
+
+  // Events come from the Google Calendar feed when the server proxies it, and
+  // from the static file bundled with the build when it does not. Either way
+  // the calendar renders.
   var eventsPromise = null;
   function getEvents() {
     if (!eventsPromise) {
-      eventsPromise = fetch('/api/events')
-        .then(function (r) { if (!r.ok) throw new Error('no api'); return r.json(); })
+      eventsPromise = fetch('/api/calendar.ics')
+        .then(function (r) {
+          if (!r.ok) throw new Error('no calendar');
+          return r.text();
+        })
+        .then(function (text) {
+          if (text.indexOf('BEGIN:VCALENDAR') < 0) throw new Error('not a calendar');
+          return calendarToEvents(text);
+        })
         .catch(function () {
           return fetch('/data/events.json')
             .then(function (r) { return r.ok ? r.json() : []; })
