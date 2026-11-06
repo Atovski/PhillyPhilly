@@ -1087,6 +1087,42 @@ a.event-row:hover {
   color: var(--brand-primary);
 }
 
+/* Four quotes: 2 x 2, then one row on wide screens — never 3 + 1 */
+@media (min-width: 640px) {
+  .quote-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .quote-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+figure.quote {
+  margin: 0;
+}
+
+.quote figcaption {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px 32px;
+}
+
+/* The FSA script injects a linked image; keep it inside narrow screens */
+.fhrs-badge img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* CTA band ---------------------------------------------------------------- */
 
 .cta-band {
