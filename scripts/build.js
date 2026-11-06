@@ -193,6 +193,24 @@ function build() {
     `User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: ${site.url}/sitemap.xml\n`
   );
 
+  // Netlify (test copy only) -----------------------------------------------
+  // The live site is nginx on the VPS (deploy/nginx.conf). When Netlify builds,
+  // give it the same /api/calendar.ics proxy and keep the test copy out of
+  // Google so it never competes with phillyphilly.co.uk.
+  if (process.env.NETLIFY === 'true') {
+    const conf = fs.readFileSync(path.join(ROOT, 'deploy', 'nginx.conf'), 'utf8');
+    const id = (/set \$phillyphilly_calendar_id "([^"]+)"/.exec(conf) || [])[1];
+    if (id) {
+      fs.writeFileSync(
+        path.join(DIST, '_redirects'),
+        `/api/calendar.ics  https://calendar.google.com/calendar/ical/${encodeURIComponent(id)}/public/basic.ics  200\n`
+      );
+    }
+    fs.writeFileSync(path.join(DIST, '_headers'), `/*\n  X-Robots-Tag: noindex, nofollow\n`);
+    fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nDisallow: /\n`);
+    console.log('\n  Netlify: calendar proxy + noindex');
+  }
+
   console.log(`\n${pages.length} pages -> dist/`);
 }
 

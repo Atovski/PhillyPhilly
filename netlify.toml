@@ -1,0 +1,9 @@
+# Netlify is only a test copy; the live site is the VPS (see deploy/).
+# dist/ is not committed, so Netlify has to build it — without this it serves
+# the repo root, which has no index.html, and every page is "Page not found".
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
