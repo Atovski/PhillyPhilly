@@ -495,6 +495,43 @@ p {
   gap: 26px;
 }
 
+.menu-item h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.menu-price {
+  flex-shrink: 0;
+  color: var(--brand-accent);
+  white-space: nowrap;
+}
+
+/* Dishes without a photo yet */
+.menu-item-plain {
+  border-top: 4px solid var(--brand-secondary);
+}
+
+.menu-stack {
+  display: grid;
+  gap: 26px;
+  align-content: start;
+}
+
+.menu-note {
+  padding: 16px 20px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.allergen-table .allergen-ask {
+  text-align: left;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
 .menu-item .allergens {
   font-size: 0.8rem;
   color: var(--ink-soft);

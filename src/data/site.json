@@ -26,13 +26,13 @@
 
   "_formEndpoint": "Enquiry form target. Sign up at web3forms.com (free), paste the access key below, and the form posts straight to the inbox in \"email\" above. Swap for any endpoint that accepts multipart POST if you prefer.",
   "formEndpoint": "https://api.web3forms.com/submit",
-  "formAccessKey": "TODO-CLIENT-WEB3FORMS-ACCESS-KEY",
+  "formAccessKey": "da5f13c5-7127-4191-97af-6de360f5caf8",
 
   "_TODO_CLIENT": "Aşağıdaki alanlar müşteriden alınacak. Doldurulana kadar sitede ilgili bloklar gizleniyor (boş string = gizle).",
   "companyNumber": "",
   "registeredAddress": "",
   "vatNumber": "",
-  "fhrsRating": "",
+  "fhrsRating": "5",
   "fhrsAuthority": "",
   "publicLiabilityCover": "",
   "employersLiability": "",

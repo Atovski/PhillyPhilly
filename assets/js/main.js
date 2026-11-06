@@ -152,8 +152,9 @@
 
       if (!list.length) {
         upcoming.innerHTML =
-          '<p class="loading">Our next dates are being confirmed. ' +
-          '<a href="/contact/">Get in touch</a> to book us for your own event.</p>';
+          '<p class="loading">Follow <a href="https://www.instagram.com/phillyphilly.uk/" rel="noopener">' +
+          '@phillyphilly.uk</a> on Instagram for where we are trading this week, or ' +
+          '<a href="/contact/">get in touch</a> to book us for your own event.</p>';
         return;
       }
 

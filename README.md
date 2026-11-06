@@ -89,15 +89,12 @@ Kodda `TODO-CLIENT` diye aratınca hepsi çıkar. Kritik olanlar:
 
 | Konu | Nerede | Neden |
 |---|---|---|
-| **Alerjen tablosu** | `src/pages/menu.html` | **Yasal.** UK gıda mevzuatı 14 alerjen için doğru bilgi vermeyi zorunlu kılar. Tahminle doldurulamaz. |
+| **Alerjen tablosu** | `src/pages/menu.html` | **Yasal.** Vegan Philly ve New Orleans Loaded Fries satırları "ekibe sorun" diyor; Seasoned Chips satırı eski "Chips" verisi — tarifle doğrulanmalı |
 | Şirket no / adres / VAT | `src/layouts/base.html` footer | Ltd ise Companies Act 2006 gereği zorunlu |
-| Sigorta + FHRS puanı | `weddings.html`, `about.html`, ana sayfa trust bar | Venue ve organizatörlerin ilk sorduğu şey; dönüşümü doğrudan artırır |
+| Sigorta tutarı | `weddings.html`, `about.html`, ana sayfa trust bar | Venue ve organizatörlerin ilk sorduğu şey (FHRS 5 eklendi) |
 | Fiyat / paket | `weddings.html`, `faq.html` | "£X'ten başlayan" yazan sayfa belirgin şekilde daha çok dönüşür |
-| Chicken wrap fotoğrafı | `img/menu-6.svg` | Şu an cheesesteak wrap ile aynı fotoğraf |
 | Gerçek müşteri yorumları | ana sayfa (hazır blok yorum satırında) | Uydurma yorum ASA/CAP kurallarına aykırı — sadece gerçekleri koy |
-| Formspree/Web3Forms anahtarı | `src/data/site.json` → `formAccessKey` | Bu olmadan teklif formu çalışmaz |
 | GTM container ID (GA4 + Meta Pixel + Google Ads bunun içinde kurulur) | `src/layouts/base.html` (head + body, yorum satırında hazır) | Reklamdan önce şart |
-| Organiser Pack PDF | `festivals-organisers.html` | Tek tıkla indirilen belge paketi ciddi fark yaratıyor |
 
 ---
 

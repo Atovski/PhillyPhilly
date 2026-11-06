@@ -4,8 +4,8 @@
   "crumb": "Menu",
   "nav": "menu",
   "priority": "0.8",
-  "title": "Menu | Philly Cheesesteaks, Loaded Fries & Wraps | Philly Philly London",
-  "description": "Philly cheesesteaks, loaded fries, mac and cheese croquettes and New Orleans spiced chicken, cooked to order from our truck. Allergen information available.",
+  "title": "Menu & Prices | Philly Cheesesteaks & Loaded Fries | Philly Philly London",
+  "description": "Philly cheesesteaks, a vegan Philly, loaded fries, mac and cheese croquettes and seasoned chips, cooked to order from our truck. Prices and allergen information.",
   "jsonld": {
     "@context": "https://schema.org",
     "@type": "Menu",
@@ -17,17 +17,19 @@
         "@type": "MenuSection",
         "name": "Mains",
         "hasMenuItem": [
-          { "@type": "MenuItem", "name": "Philly Cheesesteak", "description": "Thin-sliced beef, caramelised onions and cheddar cheese sauce in a soft roll." },
-          { "@type": "MenuItem", "name": "New Orleans Chicken", "description": "Crisp spiced chicken, mildly hot and aromatic." },
-          { "@type": "MenuItem", "name": "Philly Cheesesteak Wrap", "description": "Cheesesteak filling in a soft tortilla." }
+          { "@type": "MenuItem", "name": "Philly Cheesesteak", "description": "Thin-sliced beef, caramelised onions and cheddar cheese sauce in a soft roll.", "offers": { "@type": "Offer", "price": "14.00", "priceCurrency": "GBP" } },
+          { "@type": "MenuItem", "name": "Vegan Philly", "description": "Our Philly, made fully plant-based.", "suitableForDiet": "https://schema.org/VeganDiet", "offers": { "@type": "Offer", "price": "14.00", "priceCurrency": "GBP" } },
+          { "@type": "MenuItem", "name": "Philly Loaded Fries", "description": "Fries topped with steak and melted cheddar sauce.", "offers": { "@type": "Offer", "price": "14.50", "priceCurrency": "GBP" } },
+          { "@type": "MenuItem", "name": "New Orleans Loaded Fries", "description": "Loaded fries with our New Orleans spice blend.", "offers": { "@type": "Offer", "price": "13.50", "priceCurrency": "GBP" } }
         ]
       },
       {
         "@type": "MenuSection",
-        "name": "Sides",
+        "name": "Sides & deals",
         "hasMenuItem": [
-          { "@type": "MenuItem", "name": "Philly Loaded Fries", "description": "Fries topped with steak and melted cheddar sauce." },
-          { "@type": "MenuItem", "name": "Mac & Cheese Croquettes", "description": "Fried croquettes with a molten mac and cheese centre." }
+          { "@type": "MenuItem", "name": "Mac & Cheese Croquettes", "description": "Fried croquettes with a molten mac and cheese centre.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "GBP" } },
+          { "@type": "MenuItem", "name": "Seasoned Chips", "description": "Chips tossed in our house seasoning.", "offers": { "@type": "Offer", "price": "5.25", "priceCurrency": "GBP" } },
+          { "@type": "MenuItem", "name": "Meal Deal", "offers": { "@type": "Offer", "price": "18.99", "priceCurrency": "GBP" } }
         ]
       }
     ]
@@ -54,59 +56,71 @@ meta-->
                 <img src="/assets/img/menu/menu-3.webp" alt="Philly cheesesteak sandwich with melted cheddar sauce"
                     width="800" height="600" loading="lazy" decoding="async">
                 <div class="card-body">
-                    <h3>Philly Cheesesteak</h3>
+                    <h3>Philly Cheesesteak <span class="menu-price">£14.00</span></h3>
                     <p>The classic, and the reason we exist. Thin-sliced beef seared on the griddle with caramelised
                         onions, finished with cheddar cheese sauce in a soft roll.</p>
                 </div>
             </article>
 
             <article class="card menu-item">
-                <img src="/assets/img/menu/menu-1.webp" alt="New Orleans spiced fried chicken" width="800"
-                    height="600" loading="lazy" decoding="async">
+                <img src="/assets/img/menu/menu-2.webp" alt="Loaded fries topped with steak and cheddar sauce"
+                    width="800" height="600" loading="lazy" decoding="async">
                 <div class="card-body">
-                    <h3>New Orleans Chicken</h3>
-                    <p>Crisp on the outside, juicy inside, marinated in our own New Orleans spice blend. Mildly
-                        spicy and aromatic rather than fiery.</p>
+                    <h3>Philly Loaded Fries <span class="menu-price">£14.50</span></h3>
+                    <p>Crisp fries buried under steak and melted cheddar sauce. Big enough to share, in theory.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="menu-grid mt-4">
+            <article class="card menu-item menu-item-plain">
+                <div class="card-body">
+                    <h3>Vegan Philly <span class="menu-price">£14.00</span></h3>
+                    <p>Our Philly, made fully plant-based, so nobody in the group misses out.</p>
                 </div>
             </article>
 
-            <article class="card menu-item">
-                <img src="/assets/img/menu/menu-5.webp" alt="Philly cheesesteak wrap" width="800" height="600"
-                    loading="lazy" decoding="async">
+            <article class="card menu-item menu-item-plain">
                 <div class="card-body">
-                    <h3>Philly Cheesesteak Wrap</h3>
-                    <p>Steak, caramelised onions and cheddar in a soft tortilla. The easier option if you are eating
-                        standing up with a drink in your other hand.</p>
+                    <h3>New Orleans Loaded Fries <span class="menu-price">£13.50</span></h3>
+                    <p>Loaded fries with a kick from our own New Orleans spice blend.</p>
                 </div>
             </article>
         </div>
 
         <div class="section-head mt-4">
-            <h2>Sides</h2>
+            <h2>Sides &amp; deals</h2>
         </div>
 
         <div class="menu-grid">
             <article class="card menu-item">
-                <img src="/assets/img/menu/menu-2.webp" alt="Loaded fries topped with steak and cheddar sauce"
-                    width="800" height="600" loading="lazy" decoding="async">
-                <div class="card-body">
-                    <h3>Philly Loaded Fries</h3>
-                    <p>Crisp fries buried under steak and melted cheddar sauce. Big enough to share, in theory.</p>
-                </div>
-            </article>
-
-            <article class="card menu-item">
                 <img src="/assets/img/menu/menu-4.webp" alt="Mac and cheese croquettes" width="800" height="600"
                     loading="lazy" decoding="async">
                 <div class="card-body">
-                    <h3>Mac &amp; Cheese Croquettes</h3>
+                    <h3>Mac &amp; Cheese Croquettes <span class="menu-price">£7.00</span></h3>
                     <p>Golden fried outside, molten mac and cheese inside. Our most-ordered side, by some distance.</p>
                 </div>
             </article>
+
+            <div class="menu-stack">
+                <article class="card menu-item menu-item-plain">
+                    <div class="card-body">
+                        <h3>Seasoned Chips <span class="menu-price">£5.25</span></h3>
+                        <p>Crisp chips tossed in our house seasoning.</p>
+                    </div>
+                </article>
+
+                <article class="card menu-item menu-item-plain">
+                    <div class="card-body">
+                        <h3>Meal Deal <span class="menu-price">£18.99</span></h3>
+                        <p>Ask at the hatch for what is in today's deal.</p>
+                    </div>
+                </article>
+            </div>
         </div>
 
-        <!-- TODO-CLIENT: prices. Public trading prices can go straight on this page.
-             Event catering is quoted per head, so keep those on /contact/. -->
+        <p class="menu-note mt-4">Prices shown are for festivals and events. At our regular markets, items are
+            <strong>£1 cheaper</strong>. Private hire is quoted per head — <a href="/contact/">ask for a quote</a>.</p>
     </div>
 </section>
 
@@ -172,7 +186,7 @@ meta-->
                         <td><span class="allergen-no" aria-label="No">—</span></td>
                     </tr>
                     <tr>
-                        <th scope="row">Philly Cheesesteak Sandwich</th>
+                        <th scope="row">Philly Cheesesteak</th>
                         <td><span class="allergen-no" aria-label="No">—</span></td>
                         <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
                         <td><span class="allergen-no" aria-label="No">—</span></td>
@@ -189,24 +203,7 @@ meta-->
                         <td><span class="allergen-no" aria-label="No">—</span></td>
                     </tr>
                     <tr>
-                        <th scope="row">New Orleans Chicken Box</th>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Chips</th>
+                        <th scope="row">Seasoned Chips</th>
                         <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
                         <td><span class="allergen-no" aria-label="No">—</span></td>
                         <td><span class="allergen-no" aria-label="No">—</span></td>
@@ -240,21 +237,12 @@ meta-->
                         <td><span class="allergen-no" aria-label="No">—</span></td>
                     </tr>
                     <tr>
-                        <th scope="row">Chimichurri Loaded</th>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
-                        <td><span class="allergen-yes" aria-label="Yes">✓</span></td>
-                        <td><span class="allergen-no" aria-label="No">—</span></td>
+                        <th scope="row">Vegan Philly</th>
+                        <td colspan="14" class="allergen-ask">Please ask our team before ordering — we will talk you through the ingredients</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">New Orleans Loaded Fries</th>
+                        <td colspan="14" class="allergen-ask">Please ask our team before ordering — we will talk you through the ingredients</td>
                     </tr>
                 </tbody>
             </table>
