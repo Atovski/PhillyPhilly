@@ -100,6 +100,10 @@
     'August', 'September', 'October', 'November', 'December'];
   var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+  var MAP_ICON =
+    '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor">' +
+    '<path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+
   var TYPE_LABEL = {
     market: 'Street food market',
     festival: 'Festival',
@@ -124,9 +128,10 @@
 
   // nginx proxies the public Google Calendar iCal feed to /api/calendar.ics
   // (see deploy/nginx.conf). Each calendar entry becomes one trading day:
-  //   title    -> where we are ("Canada Water Market")
-  //   location -> address, linked to Google Maps (a URL in the description wins)
-  //   type     -> guessed from the title: "festival", "concert", "private", "closed"
+  //   title       -> where we are ("Canada Water Market")
+  //   location    -> map button; a Google Maps link is used as is, an address is searched
+  //   description -> shown under the title; a URL in it becomes a "More info" link
+  //   type        -> guessed from the title: "festival", "concert", "private", "closed"
   // Weekly/daily repeats, edited single repeats and multi-day events are handled.
 
   var CALENDAR_DAYS_AHEAD = 400;
@@ -139,8 +144,24 @@
     // "20261107" or "20261107T110000" (local / TZID) or "20261107T110000Z" (UTC)
     var m = /^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})\d{2}(Z)?)?/.exec(prop.value);
     if (!m) return null;
-    if (m[6]) return new Date(Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5]));
-    return new Date(+m[1], m[2] - 1, +m[3]);
+    if (m[6]) return londonWallClock(new Date(Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5])));
+    return new Date(+m[1], m[2] - 1, +m[3], +(m[4] || 0), +(m[5] || 0));
+  }
+
+  // UTC times are shown as London time wherever the visitor is, so dates and
+  // opening hours match the truck, not the visitor's phone.
+  var LONDON = typeof Intl !== 'undefined' && Intl.DateTimeFormat
+    ? new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    })
+    : null;
+
+  function londonWallClock(utc) {
+    if (!LONDON) return utc;
+    var p = {};
+    LONDON.formatToParts(utc).forEach(function (x) { p[x.type] = x.value; });
+    return new Date(+p.year, p.month - 1, +p.day, +p.hour, +p.minute);
   }
 
   function isoDay(d) {
@@ -257,14 +278,33 @@
     raw.forEach(function (ev) {
       if (ev.STATUS && ev.STATUS.value === 'CANCELLED') return;
       var title = icsUnescape((ev.SUMMARY && ev.SUMMARY.value) || 'Philly Philly');
-      var place = ev.LOCATION ? icsUnescape(ev.LOCATION.value) : '';
-      var url = /https?:\/\/[^\s"<>\\]+/.exec(
-        (ev.DESCRIPTION ? icsUnescape(ev.DESCRIPTION.value) : '') + ' ' + place);
-      var link = url ? url[0]
+      var place = ev.LOCATION ? icsUnescape(ev.LOCATION.value).trim() : '';
+      var map = /^https?:\/\//.test(place) ? place
         : place ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(place) : '';
+
+      // Google Calendar stores rich-text descriptions as HTML; keep the words and the first link.
+      var desc = ev.DESCRIPTION ? icsUnescape(ev.DESCRIPTION.value) : '';
+      var info = /https?:\/\/[^\s"<>\\]+/.exec(desc);
+      desc = desc.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/https?:\/\/\S+/g, '')
+        .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+
+      // Times only for timed entries (all-day entries have no clock time).
+      var time = '';
+      if (ev.DTSTART && !ev.DTSTART.date && /T\d{4}/.test(ev.DTSTART.value)) {
+        var hhmm = function (d) {
+          return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+        };
+        var s = icsDate(ev.DTSTART);
+        var e = ev.DTEND ? icsDate(ev.DTEND) : null;
+        time = hhmm(s) + (e && isoDay(e) === isoDay(s) ? '–' + hhmm(e) : '');
+      }
+
       var type = guessType(title);
       occurrences(ev, until).forEach(function (date) {
-        list.push({ date: date, location: title, type: type, link: link });
+        list.push({
+          date: date, location: title, type: type, time: time,
+          description: desc, map: map, info: info ? info[0] : ''
+        });
       });
     });
     return list;
@@ -288,6 +328,10 @@
         .catch(function () {
           return fetch('/data/events.json')
             .then(function (r) { return r.ok ? r.json() : []; })
+            .then(function (list) {
+              // events.json keeps a single "link", which is always a map link.
+              return list.map(function (e) { e.map = e.map || e.link || ''; return e; });
+            })
             .catch(function () { return []; });
         });
     }
@@ -317,16 +361,21 @@
 
       upcoming.innerHTML = list.map(function (ev) {
         var d = new Date(ev.date + 'T00:00:00');
-        var inner =
+        var meta = [DAYS[d.getDay()], ev.time, TYPE_LABEL[ev.type] || 'Event'].filter(Boolean).join(' · ');
+
+        return '<div class="event-row">' +
           '<div class="event-date"><span class="d">' + d.getDate() + '</span>' +
           '<span class="m">' + MONTHS[d.getMonth()] + '</span></div>' +
           '<div class="event-info"><strong>' + escapeHtml(ev.location) + '</strong>' +
-          '<span>' + DAYS[d.getDay()] + ' · ' + escapeHtml(TYPE_LABEL[ev.type] || 'Event') +
-          (ev.link ? ' · Details →' : '') + '</span></div>';
-
-        return ev.link
-          ? '<a class="event-row" href="' + escapeHtml(ev.link) + '" rel="noopener">' + inner + '</a>'
-          : '<div class="event-row">' + inner + '</div>';
+          '<span>' + escapeHtml(meta) + '</span>' +
+          (ev.description ? '<p class="event-desc">' + escapeHtml(ev.description) + '</p>' : '') +
+          (ev.info ? '<a class="event-more" href="' + escapeHtml(ev.info) + '" rel="noopener">More info →</a>' : '') +
+          '</div>' +
+          (ev.map
+            ? '<a class="event-map" href="' + escapeHtml(ev.map) + '" rel="noopener" target="_blank"' +
+              ' aria-label="Open ' + escapeHtml(ev.location) + ' in maps" title="Open in maps">' + MAP_ICON + '</a>'
+            : '') +
+          '</div>';
       }).join('');
     });
   }
@@ -361,7 +410,11 @@
 
           html += '<div class="calendar-cell' + (isToday ? ' is-today' : '') + '">' +
             '<div class="date-number">' + day + '</div>' +
-            (ev ? '<div class="cell-event">' + escapeHtml(ev.location) + '</div>' : '') +
+            (ev ? (ev.map
+              ? '<a class="cell-event" href="' + escapeHtml(ev.map) + '" rel="noopener" target="_blank"' +
+                ' title="' + escapeHtml([ev.time, ev.description].filter(Boolean).join(' · ') || 'Open in maps') + '">' +
+                escapeHtml(ev.location) + '</a>'
+              : '<div class="cell-event">' + escapeHtml(ev.location) + '</div>') : '') +
             '</div>';
         }
 

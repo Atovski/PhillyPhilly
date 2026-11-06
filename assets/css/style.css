@@ -422,6 +422,11 @@ p {
   margin: 14px auto 0;
 }
 
+.page-head a {
+  color: var(--brand-secondary);
+  font-weight: 600;
+}
+
 /* Cards ------------------------------------------------------------------- */
 
 .card-grid {
@@ -703,11 +708,6 @@ p {
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-a.event-row:hover {
-  box-shadow: var(--shadow-sm);
-  transform: translateX(3px);
-}
-
 .event-date {
   flex: 0 0 74px;
   text-align: center;
@@ -739,6 +739,52 @@ a.event-row:hover {
 .event-info span {
   font-size: 0.88rem;
   color: var(--ink-soft);
+}
+
+.event-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-desc {
+  margin-top: 6px;
+  font-size: 0.92rem;
+}
+
+.event-more {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--brand-accent);
+}
+
+.event-map {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--brand-secondary);
+  color: var(--brand-primary-dark);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-map:hover,
+.event-map:focus-visible {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-sm);
+}
+
+a.cell-event {
+  display: block;
+  text-decoration: none;
+}
+
+a.cell-event:hover {
+  background: var(--brand-accent);
+  color: #fff;
 }
 
 .calendar-wrap {
