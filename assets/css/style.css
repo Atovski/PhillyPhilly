@@ -777,14 +777,168 @@ p {
   box-shadow: var(--shadow-sm);
 }
 
-a.cell-event {
+/* Calendar days with events are buttons that open the details popup */
+button.calendar-cell {
   display: block;
-  text-decoration: none;
+  width: 100%;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-a.cell-event:hover {
-  background: var(--brand-accent);
-  color: #fff;
+button.calendar-cell:hover,
+button.calendar-cell:focus-visible {
+  border-color: var(--brand-secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-cell .cell-event {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-cell .cell-dot {
+  display: none;
+}
+
+/* On phones there is no room for names: a dot marks the day, the popup has the rest */
+@media (max-width: 640px) {
+  .calendar-cell.has-event {
+    background: #fff8e8;
+    border-color: var(--brand-secondary);
+  }
+
+  .calendar-cell .cell-event {
+    display: none;
+  }
+
+  .calendar-cell .cell-dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin: 6px auto 0;
+    border-radius: 50%;
+    background: var(--brand-accent);
+  }
+}
+
+.event-dialog {
+  width: min(360px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  margin: auto; /* the global reset zeroes margins, which un-centres a modal dialog */
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  overflow: visible;
+}
+
+.event-dialog[open] {
+  animation: event-dialog-in 0.22s ease-out;
+}
+
+.event-dialog::backdrop {
+  background: rgba(10, 30, 35, 0.45);
+  animation: event-backdrop-in 0.22s ease-out;
+}
+
+@keyframes event-dialog-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes event-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-dialog[open],
+  .event-dialog::backdrop {
+    animation: none;
+  }
+}
+
+.event-dialog-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border-top: 4px solid var(--brand-secondary);
+  box-shadow: var(--shadow-md);
+  padding: 20px 22px 22px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+.event-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.event-dialog-head h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--brand-primary);
+}
+
+.event-dialog-close {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.event-dialog-item + .event-dialog-item {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+
+.event-dialog-item strong {
+  display: block;
+  font-size: 1.05rem;
+  color: var(--brand-primary);
+}
+
+.event-dialog-meta {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.event-dialog-item p {
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+.event-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 14px;
+}
+
+.event-dialog-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.event-dialog-map svg {
+  width: 18px;
+  height: 18px;
 }
 
 .calendar-wrap {
@@ -1163,9 +1317,21 @@ figure.quote {
   gap: 20px 32px;
 }
 
-/* The FSA script injects a linked image; keep it inside narrow screens */
-.fhrs-badge img {
+/* The FSA script injects its image with an inline min-width of 481px, which
+   pushes phones sideways. Scale it down proportionally instead. */
+.fhrs-badge {
+  width: 481px; /* the badge's natural width (style 1) */
   max-width: 100%;
+}
+
+.fhrs-badge a {
+  display: block;
+}
+
+.fhrs-badge img {
+  display: block;
+  width: 100%;
+  min-width: 0 !important;
   height: auto;
 }
 
@@ -1491,6 +1657,9 @@ th {
 
   .hero-media {
     order: 1;
+    /* A grid item with aspect-ratio is not stretched, so its width would come
+       from the image height and overflow the phone. Pin it to the column. */
+    width: 100%;
     aspect-ratio: 16 / 10;
   }
 

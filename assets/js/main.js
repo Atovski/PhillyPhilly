@@ -380,6 +380,61 @@
     });
   }
 
+  /* ------------------------------------------------- Day details popup -- */
+
+  // Tapping a calendar day opens a small window with that day's details; the
+  // map is one tap further, from the button in its bottom-left corner.
+  var dayDialog = null;
+  var dayDialogOpener = null;
+
+  function closeDayDialog() {
+    if (!dayDialog || !dayDialog.hasAttribute('open')) return;
+    if (dayDialog.close) dayDialog.close(); else dayDialog.removeAttribute('open');
+  }
+
+  function openDayDialog(iso, evs, opener) {
+    if (!dayDialog) {
+      dayDialog = document.createElement('dialog');
+      dayDialog.className = 'event-dialog';
+      dayDialog.setAttribute('aria-labelledby', 'event-dialog-title');
+      document.body.appendChild(dayDialog);
+      // A click on the backdrop lands on the dialog element itself.
+      dayDialog.addEventListener('click', function (e) {
+        if (e.target === dayDialog || e.target.closest('.event-dialog-close')) closeDayDialog();
+      });
+      dayDialog.addEventListener('close', function () {
+        if (dayDialogOpener) dayDialogOpener.focus();
+      });
+    }
+    dayDialogOpener = opener;
+
+    var d = new Date(iso + 'T00:00:00');
+    dayDialog.innerHTML =
+      '<div class="event-dialog-card">' +
+      '<div class="event-dialog-head">' +
+      '<h3 id="event-dialog-title">' + DAYS[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS_FULL[d.getMonth()] + '</h3>' +
+      '<button type="button" class="event-dialog-close" aria-label="Close">&times;</button>' +
+      '</div>' +
+      evs.map(function (ev) {
+        var meta = [ev.time, TYPE_LABEL[ev.type] || 'Event'].filter(Boolean).join(' · ');
+        return '<div class="event-dialog-item">' +
+          '<strong>' + escapeHtml(ev.location) + '</strong>' +
+          '<span class="event-dialog-meta">' + escapeHtml(meta) + '</span>' +
+          (ev.description ? '<p>' + escapeHtml(ev.description) + '</p>' : '') +
+          '<div class="event-dialog-actions">' +
+          (ev.map
+            ? '<a class="btn btn-primary btn-sm event-dialog-map" href="' + escapeHtml(ev.map) + '" rel="noopener" target="_blank">' +
+              MAP_ICON + '<span>Show on map</span></a>'
+            : '') +
+          (ev.info ? '<a class="event-more" href="' + escapeHtml(ev.info) + '" rel="noopener">More info →</a>' : '') +
+          '</div></div>';
+      }).join('') +
+      '</div>';
+
+    if (dayDialog.showModal) dayDialog.showModal(); else dayDialog.setAttribute('open', '');
+    dayDialog.querySelector('.event-dialog-close').focus();
+  }
+
   /* ------------------------------------------------------ Month calendar -- */
 
   var grid = $('#calendar-grid');
@@ -393,8 +448,8 @@
       $('#calendar-title').textContent = MONTHS_FULL[month] + ' ' + year;
 
       getEvents().then(function (events) {
-        var byDate = {};
-        events.forEach(function (e) { byDate[e.date] = e; });
+        byDate = {};
+        events.forEach(function (e) { (byDate[e.date] = byDate[e.date] || []).push(e); });
 
         var firstDay = new Date(year, month, 1).getDay();
         var daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -405,22 +460,34 @@
 
         for (var day = 1; day <= daysInMonth; day++) {
           var iso = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
-          var ev = byDate[iso];
+          var evs = byDate[iso];
           var isToday = day === now.getDate() && month === now.getMonth() && year === now.getFullYear();
+          var cls = 'calendar-cell' + (isToday ? ' is-today' : '');
 
-          html += '<div class="calendar-cell' + (isToday ? ' is-today' : '') + '">' +
-            '<div class="date-number">' + day + '</div>' +
-            (ev ? (ev.map
-              ? '<a class="cell-event" href="' + escapeHtml(ev.map) + '" rel="noopener" target="_blank"' +
-                ' title="' + escapeHtml([ev.time, ev.description].filter(Boolean).join(' · ') || 'Open in maps') + '">' +
-                escapeHtml(ev.location) + '</a>'
-              : '<div class="cell-event">' + escapeHtml(ev.location) + '</div>') : '') +
-            '</div>';
+          if (!evs) {
+            html += '<div class="' + cls + '"><div class="date-number">' + day + '</div></div>';
+            continue;
+          }
+
+          // A day with events is a button that opens the details popup.
+          var names = evs.map(function (e) { return e.location; }).join(', ');
+          html += '<button type="button" class="' + cls + ' has-event" data-date="' + iso + '"' +
+            ' aria-haspopup="dialog" aria-label="' + escapeHtml(day + ' ' + MONTHS_FULL[month] + ': ' + names) + '">' +
+            '<span class="date-number">' + day + '</span>' +
+            evs.map(function (e) { return '<span class="cell-event">' + escapeHtml(e.location) + '</span>'; }).join('') +
+            '<span class="cell-dot" aria-hidden="true"></span>' +
+            '</button>';
         }
 
         grid.innerHTML = html;
       });
     };
+
+    var byDate = {};
+    grid.addEventListener('click', function (e) {
+      var cell = e.target.closest('.has-event');
+      if (cell && byDate[cell.dataset.date]) openDayDialog(cell.dataset.date, byDate[cell.dataset.date], cell);
+    });
 
     var prev = $('#prevMonth');
     var next = $('#nextMonth');
