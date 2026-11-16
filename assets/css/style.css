@@ -1656,6 +1656,11 @@ th {
   color: rgba(255, 255, 255, 0.68);
 }
 
+.footer-company {
+  flex-basis: 100%;
+  text-align: center;
+}
+
 .footer-legal a {
   color: rgba(255, 255, 255, 0.68);
   text-decoration: none;

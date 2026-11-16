@@ -29,8 +29,9 @@
   "formAccessKey": "da5f13c5-7127-4191-97af-6de360f5caf8",
 
   "_TODO_CLIENT": "Aşağıdaki alanlar müşteriden alınacak. Doldurulana kadar sitede ilgili bloklar gizleniyor (boş string = gizle).",
-  "companyNumber": "",
-  "registeredAddress": "",
+  "companyName": "Gargamelchef Ltd",
+  "companyNumber": "14182423",
+  "registeredAddress": "5 Brayford Square, London, E1 0SG",
   "vatNumber": "",
   "fhrsRating": "5",
   "fhrsAuthority": "",
