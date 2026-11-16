@@ -17,6 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = path.join(__dirname, '..');
 const SRC = path.join(ROOT, 'src');
@@ -24,6 +25,14 @@ const DIST = path.join(ROOT, 'dist');
 
 const site = JSON.parse(fs.readFileSync(path.join(SRC, 'data', 'site.json'), 'utf8'));
 const layout = fs.readFileSync(path.join(SRC, 'layouts', 'base.html'), 'utf8');
+
+// CSS and JS are cached by browsers for a day. Without a version in the URL a
+// returning visitor gets the new HTML with yesterday's stylesheet, so each
+// build stamps the links with a hash of the file's contents.
+const assetVersion = (file) =>
+  crypto.createHash('md5').update(fs.readFileSync(path.join(ROOT, 'assets', file))).digest('hex').slice(0, 8);
+site.cssVersion = assetVersion('css/style.css');
+site.jsVersion = assetVersion('js/main.js');
 
 const rm = (dir) => fs.rmSync(dir, { recursive: true, force: true });
 const ensure = (dir) => fs.mkdirSync(dir, { recursive: true });
