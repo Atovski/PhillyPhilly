@@ -30,8 +30,13 @@ systemctl enable --now cron >/dev/null 2>&1 || service cron start
 
 echo "==> Site files"
 if [ -d "$WEBROOT/.git" ]; then
-  git -C "$WEBROOT" fetch -q --depth 1 origin deploy
-  git -C "$WEBROOT" reset -q --hard origin/deploy
+  # GitHub is sometimes slow to answer from this host. Don't let that stop the
+  # nginx and certificate steps below; cron picks the build up on its next run.
+  if timeout 60 git -C "$WEBROOT" fetch -q --depth 1 origin deploy; then
+    git -C "$WEBROOT" reset -q --hard origin/deploy
+  else
+    echo "    could not reach GitHub just now; cron retries every 2 minutes"
+  fi
 else
   if [ -e "$WEBROOT" ]; then
     mv "$WEBROOT" "$WEBROOT.bak-$STAMP"
@@ -41,7 +46,7 @@ else
 fi
 
 cat > /etc/cron.d/phillyphilly <<EOF
-*/2 * * * * root git -C $WEBROOT fetch -q --depth 1 origin deploy && git -C $WEBROOT reset -q --hard origin/deploy
+*/2 * * * * root timeout 100 git -C $WEBROOT fetch -q --depth 1 origin deploy && git -C $WEBROOT reset -q --hard origin/deploy
 EOF
 
 echo "==> nginx"
