@@ -24,7 +24,9 @@ STAMP=$(date +%Y%m%d-%H%M%S)
 
 echo "==> Packages"
 apt-get update -qq
-apt-get install -y -qq --no-upgrade git nginx certbot python3-certbot-nginx >/dev/null
+apt-get install -y -qq --no-upgrade git nginx cron certbot python3-certbot-nginx >/dev/null
+# Minimal VPS images ship without cron running; without it nothing pulls new builds.
+systemctl enable --now cron >/dev/null 2>&1 || service cron start
 
 echo "==> Site files"
 if [ -d "$WEBROOT/.git" ]; then
